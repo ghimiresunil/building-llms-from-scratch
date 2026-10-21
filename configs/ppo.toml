@@ -1,0 +1,39 @@
+# PPO (scripts/train_ppo.py).
+
+[default]
+sft_ckpt = "models/sft.pt"
+reward_ckpt = "models/reward.pt"    # used when reward_source = "rm"
+prompt_path = "data/rl_prompts_train.jsonl"
+eval_prompt_path = "data/rl_prompts_test.jsonl"
+out_ckpt = "models/ppo.pt"
+reward_source = "verifier"          # "verifier" (GSM8K checker) | "rm" (reward model)
+iterations = 1000
+prompts_per_iter = 32
+rollout_len = 300
+temperature = 1.0
+top_p = 1.0
+ppo_epochs = 4
+minibatch_size = 16
+clip = 0.2
+vf_clip = 0.2
+vf_coef = 0.5
+ent_coef = 0.0
+gamma = 1.0
+gae_lambda = 0.95
+kl_coef = 0.05
+lr = 1e-6
+grad_clip = 1.0
+eval_every = 50
+save_every = 100
+
+[default.smoke]
+sft_ckpt = "models/smoke/sft.pt"
+reward_ckpt = "models/smoke/reward.pt"
+out_ckpt = "models/smoke/ppo.pt"
+iterations = 2
+prompts_per_iter = 4
+rollout_len = 32
+ppo_epochs = 2
+minibatch_size = 2
+eval_every = 10000
+save_every = 10000

@@ -1,0 +1,167 @@
+# Model sizes for the classic pretraining script (scripts/train_transformer.py).
+#
+# [default] is the original config (a ~3B parameter model). Each [default.NAME]
+# table is a named preset, picked with `--preset NAME`, listing only what it changes.
+#
+#   preset    data                              meant for
+#   tiny      data/tiny (TinyStories + BPE)     any laptop CPU, a few minutes
+#   student   data/tiny                         a laptop CPU, about half an hour
+#   small     data/tiny                         a fast CPU or any GPU
+#   13m       data/train, data/val (the Pile)   the 13M model from the README, one GPU
+#   77m       the Pile                          the README's 77M base, one GPU
+#   3b        the Pile                          the original default (a big GPU)
+#
+# The CPU presets read their real vocabulary size (4096 by default) from the data
+# file made by scripts/prepare_tiny_data.py; the value here is only a fallback.
+#
+# Every preset trains on windows as long as the model's context
+# (t_context_length == context_length). The original config trains on 16-token
+# windows, which leaves most position embeddings untrained; the docs explain why
+# that matters for generation.
+#
+# Want a preset of your own? Add a [default.mine] table to configs/presets.local.toml
+# (git-ignored) and run with `--preset mine`.
+
+[default]
+vocab_size = 50304
+context_length = 512
+n_embed = 2048
+n_head = 16
+n_blocks = 64
+train_path = "data/train/pile_train.h5"
+dev_path = "data/val/pile_dev.h5"
+t_batch_size = 32
+t_context_length = 16
+t_train_steps = 200000
+t_eval_steps = 1000
+t_eval_iters = 250
+t_lr_decay_step = 50000
+t_lr = 5e-4
+t_lr_decayed = 5e-5
+t_out_path = "models/transformer_B.pt"
+t_checkpoint_steps = 0          # save a periodic checkpoint every N steps (0 = off)
+t_keep_last_checkpoints = 3     # periodic checkpoints to keep (0 = keep all)
+t_checkpoint_dir = "none"       # "none" = a folder next to t_out_path
+# Memory savers, all off by default so numbers never change unless you ask.
+use_amp = false                 # bf16/fp16 autocast (CUDA only)
+amp_dtype = "bf16"              # "bf16" (no GradScaler) or "fp16" (GradScaler)
+use_gradient_checkpointing = false
+grad_accum_steps = 1
+report_memory_budget = false
+
+# --- laptop presets (TinyStories) ---
+# LR stays flat, then drops 10x for the last 20% of steps.
+
+[default.tiny]
+vocab_size = 4096
+context_length = 128
+n_embed = 64
+n_head = 4
+n_blocks = 2
+train_path = "data/tiny/train.h5"
+dev_path = "data/tiny/val.h5"
+t_batch_size = 32
+t_context_length = 128
+t_train_steps = 1500
+t_eval_steps = 150
+t_eval_iters = 20
+t_lr = 2e-3
+t_lr_decayed = 2e-4
+t_lr_decay_step = 1200
+t_out_path = "models/tiny.pt"
+sample_prompt = "Once upon a time"
+
+[default.student]
+vocab_size = 4096
+context_length = 256
+n_embed = 192
+n_head = 6
+n_blocks = 4
+train_path = "data/tiny/train.h5"
+dev_path = "data/tiny/val.h5"
+t_batch_size = 32
+t_context_length = 256
+t_train_steps = 4000
+t_eval_steps = 400
+t_eval_iters = 20
+t_lr = 1e-3
+t_lr_decayed = 1e-4
+t_lr_decay_step = 3200
+t_out_path = "models/student.pt"
+sample_prompt = "Once upon a time"
+
+[default.small]
+vocab_size = 4096
+context_length = 256
+n_embed = 384
+n_head = 6
+n_blocks = 6
+train_path = "data/tiny/train.h5"
+dev_path = "data/tiny/val.h5"
+t_batch_size = 32
+t_context_length = 256
+t_train_steps = 8000
+t_eval_steps = 800
+t_eval_iters = 20
+t_lr = 6e-4
+t_lr_decayed = 6e-5
+t_lr_decay_step = 6400
+t_out_path = "models/small.pt"
+sample_prompt = "Once upon a time"
+
+# --- GPU presets (the Pile, from scripts/data_preprocess.py) ---
+
+[default.13m]
+vocab_size = 50304
+context_length = 128
+n_embed = 128
+n_head = 8
+n_blocks = 1
+train_path = "data/train/pile_train.h5"
+dev_path = "data/val/pile_dev.h5"
+t_batch_size = 64
+t_context_length = 128
+t_train_steps = 20000
+t_eval_steps = 1000
+t_eval_iters = 100
+t_lr = 5e-4
+t_lr_decayed = 5e-5
+t_lr_decay_step = 16000
+t_out_path = "models/13m.pt"
+
+[default.77m]
+vocab_size = 50304
+context_length = 512
+n_embed = 512
+n_head = 8
+n_blocks = 8
+train_path = "data/train/pile_train.h5"
+dev_path = "data/val/pile_dev.h5"
+t_batch_size = 24
+t_context_length = 512
+t_train_steps = 20000
+t_eval_steps = 1000
+t_eval_iters = 100
+t_lr = 3e-4
+t_lr_decayed = 3e-5
+t_lr_decay_step = 16000
+t_out_path = "models/77m.pt"
+
+# The original default (about 3B parameters), spelled out so it survives edits to [default].
+[default.3b]
+vocab_size = 50304
+context_length = 512
+n_embed = 2048
+n_head = 16
+n_blocks = 64
+train_path = "data/train/pile_train.h5"
+dev_path = "data/val/pile_dev.h5"
+t_batch_size = 32
+t_context_length = 16
+t_train_steps = 200000
+t_eval_steps = 1000
+t_eval_iters = 250
+t_lr = 5e-4
+t_lr_decayed = 5e-5
+t_lr_decay_step = 50000
+t_out_path = "models/transformer_B.pt"

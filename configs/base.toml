@@ -1,0 +1,64 @@
+# Shared model + runtime settings, read by every post-training stage.
+#
+# How this file works:
+#   [default]        every setting, with the value a normal run uses.
+#   [default.smoke]  layered on top with `--env smoke` (or BLFS_ENV=smoke): a tiny
+#                    model on the CPU, so a whole run finishes in seconds.
+#   [default.test]   the even smaller model the unit tests build.
+#
+# [default] is the full list of settings: a key that isn't here (or in a stage
+# file) is rejected as a typo. TOML has no `null`, so optional settings use "none".
+#
+# Personal tweaks go in configs/base.local.toml (git-ignored), which Dynaconf
+# merges in automatically, sub-tables included.
+
+[default]
+# --- model architecture (must match across every stage and the pretrained checkpoint) ---
+arch = "classic"            # "classic" = the original Transformer, "modern" = Llama-style
+vocab_size = 50304
+context_length = 1024
+n_embed = 1024
+n_head = 16
+n_blocks = 24
+
+# --- modern architecture only (ignored when arch = "classic") ---
+n_kv_head = "none"          # grouped-query attention, e.g. 4; "none" = one KV head per query head
+attention = "gqa"           # "gqa" or "mla" (DeepSeek multi-head latent attention)
+kv_latent_dim = "none"      # MLA latent size; "none" = n_embed // 4
+rope_theta = 10000.0
+qk_norm = true
+attn_gate = false
+sliding_window = "none"     # e.g. 512 to attend to the last 512 tokens only
+tie_embeddings = true
+n_experts = 0               # > 0 turns on Mixture of Experts
+moe_top_k = 2
+n_shared_experts = 0
+
+# --- runtime ---
+device = "auto"             # auto | cuda | mps | cpu
+amp_dtype = "bf16"          # "bf16" | "fp16" | "none"; ignored on CPU
+seed = 1337
+compile = false             # torch.compile: big speedup, slow first step
+ckpt_dir = "models"
+log_dir = "logs"
+use_wandb = false
+wandb_project = "building-llms-from-scratch"
+
+[default.smoke]
+context_length = 256
+n_embed = 128
+n_head = 4
+n_blocks = 2
+device = "cpu"
+amp_dtype = "none"
+ckpt_dir = "models/smoke"
+log_dir = "logs/smoke"
+
+[default.test]
+vocab_size = 256
+context_length = 64
+n_embed = 64
+n_head = 4
+n_blocks = 2
+device = "cpu"
+amp_dtype = "none"
