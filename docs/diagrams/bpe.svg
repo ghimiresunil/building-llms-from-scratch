@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="460" viewBox="0 0 1180 460" role="img" aria-label="Training a BPE tokenizer">
+<title>Training a BPE tokenizer</title>
+<defs>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#D9E1EC"/></pattern>
+<marker id="head1F2A44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F2A44"/></marker>
+<marker id="head8A96AB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#8A96AB"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FBFCFE"/>
+<rect width="100%" height="100%" fill="url(#dots)"/>
+<text x="32.0" y="42.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="21" font-weight="700" fill="#1F2A44" text-anchor="start">Training a BPE tokenizer</text>
+<text x="32.0" y="66.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6780" text-anchor="start">Start from bytes. Repeatedly glue the most frequent neighbouring pair into a new token.</text>
+<rect x="80.0" y="120.5" width="240.0" height="59.0" rx="9.0" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.8"/>
+<text x="200.0" y="146.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Text as bytes</text>
+<text x="200.0" y="166.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">256 starting tokens</text>
+<rect x="80.0" y="215.5" width="240.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="200.0" y="241.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Count neighbour pairs</text>
+<text x="200.0" y="261.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">across the whole corpus</text>
+<rect x="80.0" y="310.5" width="240.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="200.0" y="336.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Merge the top pair</text>
+<text x="200.0" y="356.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">it gets the next id</text>
+<path d="M 200.0 179.5 L 200.0 215.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 200.0 274.5 L 200.0 310.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 80.0 340.0 L 50.0 340.0 L 50.0 245.0 L 80.0 245.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="485.0" y="136.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="520.0" y="154.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">a</text>
+<rect x="585.0" y="136.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="620.0" y="154.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t</text>
+<path d="M 660.0 150.0 L 740.0 150.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head8A96AB)"/>
+<rect x="755.0" y="136.5" width="90.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="800.0" y="154.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">at</text>
+<rect x="485.0" y="186.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="520.0" y="204.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">h</text>
+<rect x="585.0" y="186.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="620.0" y="204.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">e</text>
+<path d="M 660.0 200.0 L 740.0 200.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head8A96AB)"/>
+<rect x="755.0" y="186.5" width="90.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="800.0" y="204.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">he</text>
+<rect x="485.0" y="236.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="520.0" y="254.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">␣</text>
+<rect x="585.0" y="236.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="620.0" y="254.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t</text>
+<path d="M 660.0 250.0 L 740.0 250.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head8A96AB)"/>
+<rect x="755.0" y="236.5" width="90.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="800.0" y="254.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">␣t</text>
+<rect x="485.0" y="286.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="520.0" y="304.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">␣t</text>
+<rect x="585.0" y="286.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="620.0" y="304.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">he</text>
+<path d="M 660.0 300.0 L 740.0 300.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head8A96AB)"/>
+<rect x="755.0" y="286.5" width="90.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="800.0" y="304.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">␣the</text>
+<rect x="485.0" y="336.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="520.0" y="354.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">␣</text>
+<rect x="585.0" y="336.5" width="70.0" height="27.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="620.0" y="354.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">s</text>
+<path d="M 660.0 350.0 L 740.0 350.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head8A96AB)"/>
+<rect x="755.0" y="336.5" width="90.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="800.0" y="354.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">␣s</text>
+<text x="58.0" y="297.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="start">repeat</text>
+<text x="200.0" y="410.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">until vocab_size is reached</text>
+<text x="700.0" y="110.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#5B6780" text-anchor="middle">The first merges learned on a toy corpus (src/tokenizer/bpe.py)</text>
+<text x="570.0" y="155.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#5B6780" text-anchor="middle">+</text>
+<text x="870.0" y="155.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="start">id 256</text>
+<text x="570.0" y="205.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#5B6780" text-anchor="middle">+</text>
+<text x="870.0" y="205.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="start">id 257</text>
+<text x="570.0" y="255.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#5B6780" text-anchor="middle">+</text>
+<text x="870.0" y="255.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="start">id 258</text>
+<text x="570.0" y="305.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#5B6780" text-anchor="middle">+</text>
+<text x="870.0" y="305.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="start">id 259</text>
+<text x="570.0" y="355.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="400" fill="#5B6780" text-anchor="middle">+</text>
+<text x="870.0" y="355.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="start">id 260</text>
+</svg>
