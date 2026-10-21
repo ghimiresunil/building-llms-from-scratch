@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="440" viewBox="0 0 1180 440" role="img" aria-label="Speculative decoding">
+<title>Speculative decoding</title>
+<defs>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#D9E1EC"/></pattern>
+<marker id="head1F2A44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F2A44"/></marker>
+<marker id="head8A96AB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#8A96AB"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FBFCFE"/>
+<rect width="100%" height="100%" fill="url(#dots)"/>
+<text x="32.0" y="42.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="21" font-weight="700" fill="#1F2A44" text-anchor="start">Speculative decoding</text>
+<text x="32.0" y="66.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6780" text-anchor="start">A small model guesses a few tokens; the big model checks them all at once.</text>
+<rect x="25.0" y="102.5" width="170.0" height="59.0" rx="9.0" fill="#F0F2F5" stroke="#6B7280" stroke-width="1.8"/>
+<text x="110.0" y="128.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Draft model</text>
+<text x="110.0" y="148.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">small and fast</text>
+<rect x="352.0" y="118.5" width="56.0" height="27.0" rx="4" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.3"/>
+<text x="380.0" y="136.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t1</text>
+<rect x="422.0" y="118.5" width="56.0" height="27.0" rx="4" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.3"/>
+<text x="450.0" y="136.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t2</text>
+<rect x="492.0" y="118.5" width="56.0" height="27.0" rx="4" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.3"/>
+<text x="520.0" y="136.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t3</text>
+<rect x="562.0" y="118.5" width="56.0" height="27.0" rx="4" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.3"/>
+<text x="590.0" y="136.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t4</text>
+<path d="M 195.0 132.0 L 352.0 132.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="745.0" y="102.5" width="250.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="870.0" y="128.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Big model</text>
+<text x="870.0" y="148.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">one forward pass over all k</text>
+<path d="M 618.0 132.0 L 745.0 132.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="352.0" y="243.5" width="56.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="380.0" y="261.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t1</text>
+<rect x="422.0" y="243.5" width="56.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="450.0" y="261.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t2</text>
+<rect x="492.0" y="243.5" width="56.0" height="27.0" rx="4" fill="#FBE6EE" stroke="#B0215A" stroke-width="1.3"/>
+<text x="520.0" y="261.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t3</text>
+<rect x="562.0" y="243.5" width="56.0" height="27.0" rx="4" fill="#F0F2F5" stroke="#6B7280" stroke-width="1.3"/>
+<text x="590.0" y="261.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t4</text>
+<rect x="492.0" y="323.5" width="56.0" height="27.0" rx="4" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.3"/>
+<text x="520.0" y="341.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">t3&#x27;</text>
+<path d="M 520.0 307.0 L 520.0 323.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head8A96AB)"/>
+<path d="M 870.0 161.5 L 870.0 257.0 L 618.0 257.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="234.9" y="109.0" width="77.2" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="273.5" y="122.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">proposes k</text>
+<rect x="659.7" y="109.0" width="43.6" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="681.5" y="122.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">check</text>
+<text x="380.0" y="297.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">kept</text>
+<text x="450.0" y="297.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">kept</text>
+<text x="520.0" y="297.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">rejected</text>
+<text x="590.0" y="297.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">dropped</text>
+<text x="560.0" y="342.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="start">resampled from the big model</text>
+<text x="870.0" y="382.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="middle">The output follows the big model&#x27;s distribution exactly.</text>
+<text x="870.0" y="402.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="middle">A better draft only means fewer passes.</text>
+</svg>

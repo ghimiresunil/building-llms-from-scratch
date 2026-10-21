@@ -1,0 +1,31 @@
+# Supervised fine-tuning (scripts/train_sft.py).
+
+[default]
+pretrained_ckpt = "models/base_pretrained.pt"
+data_path = "data/sft_packed.h5"
+dev_path = "data/sft_dev_packed.h5"
+out_ckpt = "models/sft.pt"
+batch_size = 16
+grad_accum = 2
+epochs = 3
+max_steps = -1              # -1 = run the full epochs
+eval_steps = 200
+warmup_steps = 100
+lr = 1e-5
+min_lr = 1e-6
+weight_decay = 0.0
+grad_clip = 1.0
+save_every = 500
+# LoRA: 0 = full fine-tuning. Adapters are merged back in before the checkpoint is saved.
+lora_rank = 0
+lora_alpha = 16.0
+lora_dropout = 0.0
+
+[default.smoke]
+pretrained_ckpt = "models/smoke/base_pretrained.pt"
+out_ckpt = "models/smoke/sft.pt"
+max_steps = 10
+batch_size = 4
+eval_steps = 10000
+warmup_steps = 2
+save_every = 10000

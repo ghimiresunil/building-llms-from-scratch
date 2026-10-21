@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="440" viewBox="0 0 1240 440" role="img" aria-label="Generating with a KV cache">
+<title>Generating with a KV cache</title>
+<defs>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#D9E1EC"/></pattern>
+<marker id="head1F2A44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F2A44"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FBFCFE"/>
+<rect width="100%" height="100%" fill="url(#dots)"/>
+<text x="32.0" y="42.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="21" font-weight="700" fill="#1F2A44" text-anchor="start">Generating with a KV cache</text>
+<text x="32.0" y="66.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6780" text-anchor="start">Each step runs only the newest token through the model and reuses every key and value before it.</text>
+<rect x="25.0" y="182.5" width="170.0" height="59.0" rx="9.0" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.8"/>
+<text x="110.0" y="208.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Newest token</text>
+<text x="110.0" y="228.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">position t</text>
+<rect x="250.0" y="182.5" width="180.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="340.0" y="208.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">q, k, v</text>
+<text x="340.0" y="228.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">for this token only</text>
+<path d="M 195.0 212.0 L 250.0 212.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="532.0" y="129.0" width="56.0" height="26.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="560.0" y="146.3" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#1F2A44" text-anchor="middle">k1 v1</text>
+<rect x="594.0" y="129.0" width="56.0" height="26.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="622.0" y="146.3" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#1F2A44" text-anchor="middle">k2 v2</text>
+<rect x="656.0" y="129.0" width="56.0" height="26.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="684.0" y="146.3" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#1F2A44" text-anchor="middle">k3 v3</text>
+<rect x="718.0" y="129.0" width="56.0" height="26.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="746.0" y="146.3" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#1F2A44" text-anchor="middle">k4 v4</text>
+<rect x="780.0" y="129.0" width="56.0" height="26.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="808.0" y="146.3" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#1F2A44" text-anchor="middle">k5 v5</text>
+<rect x="842.0" y="129.0" width="56.0" height="26.0" rx="4" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.3"/>
+<text x="870.0" y="146.3" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#1F2A44" text-anchor="middle">k6 v6</text>
+<rect x="904.0" y="129.0" width="56.0" height="26.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="932.0" y="146.3" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#1F2A44" text-anchor="middle">k7 v7</text>
+<path d="M 430.0 212.0 L 932.0 212.0 L 932.0 156.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="965.0" y="292.5" width="230.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="1080.0" y="318.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Attention</text>
+<text x="1080.0" y="338.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">q against the whole cache</text>
+<path d="M 960.0 142.0 L 1080.0 142.0 L 1080.0 292.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 340.0 241.5 L 340.0 322.0 L 965.0 322.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 1080.0 351.5 L 1080.0 412.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<text x="745.0" y="110.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="middle">cache: keys and values of every earlier token</text>
+<rect x="639.1" y="195.0" width="83.9" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="681.1" y="208.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">append k, v</text>
+<rect x="1009.3" y="123.0" width="63.8" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="1041.2" y="136.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">read all</text>
+<rect x="674.1" y="305.0" width="17.4" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="682.8" y="318.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">q</text>
+<rect x="1041.4" y="374.8" width="77.2" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="1080.0" y="387.8" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">next token</text>
+</svg>

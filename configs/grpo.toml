@@ -1,0 +1,39 @@
+# GRPO / RLVR (scripts/train_grpo.py).
+
+[default]
+sft_ckpt = "models/sft.pt"
+prompt_path = "data/rl_prompts_train.jsonl"
+eval_prompt_path = "data/rl_prompts_test.jsonl"
+curriculum_path = "data/arithmetic_prompts.jsonl"   # an easy warm-up before GSM8K
+curriculum_iters = 100
+out_ckpt = "models/grpo.pt"
+iterations = 1000
+prompts_per_iter = 8
+group_size = 8              # answers sampled per prompt
+rollout_len = 300
+temperature = 1.0
+top_p = 1.0
+grpo_epochs = 1
+clip = 0.2
+clip_high = "none"          # DAPO "clip-higher", e.g. 0.28; "none" = use `clip` on both sides
+kl_coef = 0.04
+adv_norm = "std"            # "none" = Dr. GRPO
+loss_agg = "token-mean"     # "token-mean" | "seq-mean-token-mean" | "seq-mean-token-sum-norm"
+ratio_level = "token"       # "sequence" = GSPO
+filter_groups = false       # DAPO dynamic sampling
+lr = 1e-6
+grad_clip = 1.0
+eval_every = 50
+save_every = 100
+
+[default.smoke]
+sft_ckpt = "models/smoke/sft.pt"
+out_ckpt = "models/smoke/grpo.pt"
+iterations = 2
+prompts_per_iter = 2
+group_size = 4
+rollout_len = 32
+curriculum_iters = 1
+grpo_epochs = 1
+eval_every = 10000
+save_every = 10000

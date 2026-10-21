@@ -1,0 +1,17 @@
+# Logging for every script, read by src/decorators/logging_service.py.
+#
+# Change the level for one run with an environment variable, e.g.
+#   BLFS_LOG_LEVEL=DEBUG python scripts/train_sft.py
+# or keep a personal default in configs/logging.local.toml (git-ignored).
+#
+# At DEBUG, @log_execution also logs each call's arguments and return value
+# (shortened, so a tensor or a model never floods the terminal).
+
+[default]
+app_name = "building-llms-from-scratch"
+log_level = "INFO"          # DEBUG | INFO | WARNING | ERROR | CRITICAL
+log_format = "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+date_format = "%Y-%m-%d %H:%M:%S"
+
+[default.test]
+log_level = "DEBUG"

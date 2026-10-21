@@ -1,0 +1,34 @@
+# DPO and friends (scripts/train_dpo.py).
+
+[default]
+sft_ckpt = "models/sft.pt"  # starting policy and the frozen reference
+pref_path = "data/preferences.jsonl"
+test_path = "data/preferences_test.jsonl"
+out_ckpt = "models/dpo.pt"
+loss_type = "dpo"           # "dpo" | "ipo" | "simpo" | "orpo" | "kto"
+beta = 0.1
+label_smoothing = 0.0       # > 0 = conservative DPO, for noisy labels
+simpo_gamma = 0.5
+orpo_lambda = 1.0
+batch_size = 8
+epochs = 1
+eval_steps = 200
+warmup_steps = 50
+lr = 5e-7
+weight_decay = 0.0
+grad_clip = 1.0
+max_len = 768
+save_every = 500
+
+[default.smoke]
+sft_ckpt = "models/smoke/sft.pt"
+out_ckpt = "models/smoke/dpo.pt"
+batch_size = 4
+epochs = 1
+eval_steps = 10000
+warmup_steps = 2
+max_len = 256
+save_every = 10000
+
+[default.test]
+max_len = 64

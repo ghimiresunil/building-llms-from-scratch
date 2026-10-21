@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="830" viewBox="0 0 960 830" role="img" aria-label="The modern block">
+<title>The modern block</title>
+<defs>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#D9E1EC"/></pattern>
+<marker id="head1F2A44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F2A44"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FBFCFE"/>
+<rect width="100%" height="100%" fill="url(#dots)"/>
+<text x="32.0" y="42.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="21" font-weight="700" fill="#1F2A44" text-anchor="start">The modern block</text>
+<text x="32.0" y="66.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6780" text-anchor="start">Same skeleton as the classic block. Almost every part inside it has been swapped.</text>
+<rect x="300.0" y="82.5" width="200.0" height="59.0" rx="9.0" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.8"/>
+<text x="400.0" y="108.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">x</text>
+<text x="400.0" y="128.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">from the block below</text>
+<rect x="325.0" y="196.5" width="150.0" height="41.0" rx="20.5" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.8"/>
+<text x="400.0" y="221.2" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">RMSNorm</text>
+<rect x="270.0" y="272.5" width="260.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="400.0" y="298.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Attention</text>
+<text x="400.0" y="318.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">RoPE on q and k, GQA or MLA</text>
+<circle cx="400.0" cy="387.0" r="13" fill="#FFFFFF" stroke="#1F2A44" stroke-width="1.7"/>
+<path d="M 394 387 L 406 387 M 400 381 L 400 393" stroke="#1F2A44" stroke-width="1.8"/>
+<rect x="325.0" y="451.5" width="150.0" height="41.0" rx="20.5" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.8"/>
+<text x="400.0" y="476.2" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">RMSNorm</text>
+<rect x="270.0" y="527.5" width="260.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="400.0" y="553.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">SwiGLU</text>
+<text x="400.0" y="573.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">or Mixture of Experts</text>
+<circle cx="400.0" cy="642.0" r="13" fill="#FFFFFF" stroke="#1F2A44" stroke-width="1.7"/>
+<path d="M 394 642 L 406 642 M 400 636 L 400 648" stroke="#1F2A44" stroke-width="1.8"/>
+<rect x="300.0" y="697.5" width="200.0" height="59.0" rx="9.0" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.8"/>
+<text x="400.0" y="723.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">x</text>
+<text x="400.0" y="743.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">to the next block</text>
+<path d="M 400.0 141.5 L 400.0 196.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 400.0 237.5 L 400.0 272.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 400.0 331.5 L 400.0 374.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 400.0 400.0 L 400.0 451.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 400.0 492.5 L 400.0 527.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 400.0 586.5 L 400.0 629.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 400.0 655.0 L 400.0 697.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 400.0 164.0 L 220.0 164.0 L 220.0 387.0 L 387.0 387.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 400.0 422.0 L 220.0 422.0 L 220.0 642.0 L 387.0 642.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="201.6" y="221.5" width="36.9" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="220.0" y="234.5" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">skip</text>
+<rect x="201.6" y="506.5" width="36.9" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="220.0" y="519.5" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">skip</text>
+<text x="560.0" y="213.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">LayerNorm without the mean:</text>
+<text x="560.0" y="231.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">cheaper, works as well</text>
+<text x="560.0" y="298.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">word order as rotations,</text>
+<text x="560.0" y="316.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">fewer key/value heads</text>
+<text x="560.0" y="553.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">a gated MLP, or a router</text>
+<text x="560.0" y="571.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">that picks k experts per token</text>
+<text x="400.0" y="797.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="400" fill="#1F2A44" text-anchor="middle">--arch modern   (src/models/modern/)</text>
+</svg>

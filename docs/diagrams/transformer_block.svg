@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="830" viewBox="0 0 820 830" role="img" aria-label="One Transformer block">
+<title>One Transformer block</title>
+<defs>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#D9E1EC"/></pattern>
+<marker id="head1F2A44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F2A44"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FBFCFE"/>
+<rect width="100%" height="100%" fill="url(#dots)"/>
+<text x="32.0" y="42.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="21" font-weight="700" fill="#1F2A44" text-anchor="start">One Transformer block</text>
+<text x="32.0" y="66.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6780" text-anchor="start">Normalise, transform, add back. Twice: once to mix positions, once to think per position.</text>
+<rect x="310.0" y="82.5" width="200.0" height="59.0" rx="9.0" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.8"/>
+<text x="410.0" y="108.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">x</text>
+<text x="410.0" y="128.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">from the block below</text>
+<rect x="335.0" y="196.5" width="150.0" height="41.0" rx="20.5" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.8"/>
+<text x="410.0" y="221.2" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">LayerNorm</text>
+<rect x="290.0" y="272.5" width="240.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="410.0" y="298.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Multi-head attention</text>
+<text x="410.0" y="318.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">causal mask</text>
+<circle cx="410.0" cy="387.0" r="13" fill="#FFFFFF" stroke="#1F2A44" stroke-width="1.7"/>
+<path d="M 404 387 L 416 387 M 410 381 L 410 393" stroke="#1F2A44" stroke-width="1.8"/>
+<rect x="335.0" y="451.5" width="150.0" height="41.0" rx="20.5" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.8"/>
+<text x="410.0" y="476.2" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#1F2A44" text-anchor="middle">LayerNorm</text>
+<rect x="290.0" y="527.5" width="240.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="410.0" y="553.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">MLP</text>
+<text x="410.0" y="573.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">4x wider inside, ReLU</text>
+<circle cx="410.0" cy="642.0" r="13" fill="#FFFFFF" stroke="#1F2A44" stroke-width="1.7"/>
+<path d="M 404 642 L 416 642 M 410 636 L 410 648" stroke="#1F2A44" stroke-width="1.8"/>
+<rect x="310.0" y="697.5" width="200.0" height="59.0" rx="9.0" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.8"/>
+<text x="410.0" y="723.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">x</text>
+<text x="410.0" y="743.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">to the next block</text>
+<path d="M 410.0 141.5 L 410.0 196.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 410.0 237.5 L 410.0 272.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 410.0 331.5 L 410.0 374.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 410.0 400.0 L 410.0 451.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 410.0 492.5 L 410.0 527.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 410.0 586.5 L 410.0 629.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 410.0 655.0 L 410.0 697.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 410.0 164.0 L 230.0 164.0 L 230.0 387.0 L 397.0 387.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 410.0 422.0 L 230.0 422.0 L 230.0 642.0 L 397.0 642.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<text x="424.0" y="172.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="start">(B, T, C)</text>
+<text x="424.0" y="692.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="start">(B, T, C)</text>
+<rect x="211.6" y="221.5" width="36.9" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="230.0" y="234.5" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">skip</text>
+<rect x="211.6" y="506.5" width="36.9" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="230.0" y="519.5" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">skip</text>
+<text x="580.0" y="297.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">each position reads</text>
+<text x="580.0" y="315.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">the ones before it</text>
+<text x="580.0" y="552.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">each position on</text>
+<text x="580.0" y="570.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="start">its own</text>
+<text x="410.0" y="797.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="400" fill="#1F2A44" text-anchor="middle">x = x + attn(ln1(x));   x = x + mlp(ln2(x))</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="470" viewBox="0 0 1000 470" role="img" aria-label="LoRA: train a small side path">
+<title>LoRA: train a small side path</title>
+<defs>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#D9E1EC"/></pattern>
+<marker id="head1F2A44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F2A44"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FBFCFE"/>
+<rect width="100%" height="100%" fill="url(#dots)"/>
+<text x="32.0" y="42.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="21" font-weight="700" fill="#1F2A44" text-anchor="start">LoRA: train a small side path</text>
+<text x="32.0" y="66.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6780" text-anchor="start">The big matrix stays frozen. Two thin matrices learn the change, then get merged back in.</text>
+<rect x="55.0" y="222.5" width="150.0" height="59.0" rx="9.0" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.8"/>
+<text x="130.0" y="248.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">x</text>
+<text x="130.0" y="268.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">input, size k</text>
+<rect x="370.0" y="112.0" width="200.0" height="80.0" rx="9.0" fill="#F0F2F5" stroke="#6B7280" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="470.0" y="148.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">W</text>
+<text x="470.0" y="168.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">d x k, frozen</text>
+<rect x="340.0" y="332.5" width="120.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="400.0" y="358.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">A</text>
+<text x="400.0" y="378.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">r x k</text>
+<rect x="505.0" y="332.5" width="170.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="590.0" y="358.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">B</text>
+<text x="590.0" y="378.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">d x r, starts at 0</text>
+<circle cx="780.0" cy="252.0" r="13" fill="#FFFFFF" stroke="#1F2A44" stroke-width="1.7"/>
+<path d="M 774 252 L 786 252 M 780 246 L 780 258" stroke="#1F2A44" stroke-width="1.8"/>
+<rect x="850.0" y="231.0" width="100.0" height="42.0" rx="9.0" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.8"/>
+<text x="900.0" y="256.5" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">y</text>
+<path d="M 205.0 252.0 L 250.0 252.0 L 250.0 152.0 L 370.0 152.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 205.0 252.0 L 250.0 252.0 L 250.0 362.0 L 340.0 362.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 460.0 362.0 L 505.0 362.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 570.0 152.0 L 780.0 152.0 L 780.0 239.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 675.0 362.0 L 780.0 362.0 L 780.0 265.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 793.0 252.0 L 850.0 252.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="473.8" y="341.0" width="17.4" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="482.5" y="354.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">r</text>
+<rect x="713.8" y="343.0" width="83.9" height="19" rx="3" fill="#FBFCFE" opacity="0.95"/><text x="755.8" y="356.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">x alpha / r</text>
+<text x="500.0" y="437.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="middle">--lora_rank 16: r is tiny next to d and k, so few parameters train.</text>
+<text x="500.0" y="457.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="middle">At save time W becomes W + (alpha / r) B A, a normal checkpoint again.</text>
+</svg>

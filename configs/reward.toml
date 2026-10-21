@@ -1,0 +1,29 @@
+# Reward model (scripts/train_reward.py).
+
+[default]
+sft_ckpt = "models/sft.pt"
+pref_path = "data/preferences.jsonl"
+test_path = "data/preferences_test.jsonl"
+out_ckpt = "models/reward.pt"
+batch_size = 8              # preference pairs per step (2x sequences through the model)
+epochs = 1
+eval_steps = 200
+warmup_steps = 50
+lr = 1e-5
+weight_decay = 0.0
+grad_clip = 1.0
+max_len = 768
+save_every = 500
+
+[default.smoke]
+sft_ckpt = "models/smoke/sft.pt"
+out_ckpt = "models/smoke/reward.pt"
+batch_size = 4
+epochs = 1
+eval_steps = 10000
+warmup_steps = 2
+max_len = 256
+save_every = 10000
+
+[default.test]
+max_len = 64

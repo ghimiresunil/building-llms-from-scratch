@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="400" viewBox="0 0 1180 400" role="img" aria-label="Scoring every stage the same way">
+<title>Scoring every stage the same way</title>
+<defs>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#D9E1EC"/></pattern>
+<marker id="head1F2A44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F2A44"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FBFCFE"/>
+<rect width="100%" height="100%" fill="url(#dots)"/>
+<text x="32.0" y="42.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="21" font-weight="700" fill="#1F2A44" text-anchor="start">Scoring every stage the same way</text>
+<text x="32.0" y="66.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6780" text-anchor="start">Greedy answers to held-out GSM8K questions, checked by the same function the RL stages use.</text>
+<rect x="40.0" y="88.5" width="170.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="125.0" y="106.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">base_pretrained.pt</text>
+<rect x="40.0" y="140.5" width="170.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="125.0" y="158.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">sft.pt</text>
+<rect x="40.0" y="192.5" width="170.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="125.0" y="210.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">dpo.pt</text>
+<rect x="40.0" y="244.5" width="170.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="125.0" y="262.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">ppo.pt</text>
+<rect x="40.0" y="296.5" width="170.0" height="27.0" rx="4" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.3"/>
+<text x="125.0" y="314.7" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#1F2A44" text-anchor="middle">grpo.pt</text>
+<rect x="319.0" y="177.5" width="162.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="400.0" y="203.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Greedy decoding</text>
+<text x="400.0" y="223.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">--limit questions</text>
+<rect x="525.0" y="177.5" width="250.0" height="59.0" rx="29.5" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.8"/>
+<text x="650.0" y="203.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Extract the answer</text>
+<text x="650.0" y="223.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">&lt;answer&gt; tag, then fallbacks</text>
+<rect x="790.0" y="177.5" width="150.0" height="59.0" rx="9.0" fill="#FBF2D6" stroke="#A97A00" stroke-width="1.8"/>
+<text x="865.0" y="203.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Match gold?</text>
+<text x="865.0" y="223.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">1 or 0</text>
+<rect x="960.0" y="177.5" width="200.0" height="59.0" rx="9.0" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.8"/>
+<text x="1060.0" y="203.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">One row per stage</text>
+<text x="1060.0" y="223.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">logs/table.jsonl</text>
+<path d="M 210.0 102.0 L 255.0 102.0 L 255.0 207.0 L 310.0 207.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="M 210.0 154.0 L 255.0 154.0 L 255.0 207.0 L 310.0 207.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="M 210.0 206.0 L 255.0 206.0 L 255.0 207.0 L 310.0 207.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 210.0 258.0 L 255.0 258.0 L 255.0 207.0 L 310.0 207.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="M 210.0 310.0 L 255.0 310.0 L 255.0 207.0 L 310.0 207.0" fill="none" stroke="#8A96AB" stroke-width="1.7" stroke-linejoin="round"/>
+<path d="M 481.0 207.0 L 525.0 207.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 775.0 207.0 L 790.0 207.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 940.0 207.0 L 960.0 207.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<text x="590.0" y="362.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="middle">Small models score low in absolute terms; the story is how the number moves.</text>
+</svg>

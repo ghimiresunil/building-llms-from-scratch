@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="590" viewBox="0 0 1180 590" role="img" aria-label="Mixture of Experts">
+<title>Mixture of Experts</title>
+<defs>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#D9E1EC"/></pattern>
+<marker id="head1F2A44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F2A44"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FBFCFE"/>
+<rect width="100%" height="100%" fill="url(#dots)"/>
+<text x="32.0" y="42.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="21" font-weight="700" fill="#1F2A44" text-anchor="start">Mixture of Experts</text>
+<text x="32.0" y="66.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6780" text-anchor="start">A router sends each token to its top k experts. More parameters, about the same work per token.</text>
+<rect x="25.0" y="251.0" width="170.0" height="42.0" rx="9.0" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.8"/>
+<text x="110.0" y="276.5" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Token vector</text>
+<rect x="235.0" y="242.5" width="170.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="320.0" y="268.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Router</text>
+<text x="320.0" y="288.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">a score per expert</text>
+<path d="M 195.0 272.0 L 235.0 272.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="525.0" y="105.0" width="150.0" height="34.0" rx="9.0" fill="#F0F2F5" stroke="#6B7280" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="600.0" y="125.9" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1F2A44" text-anchor="middle">Expert 1</text>
+<rect x="525.0" y="148.0" width="150.0" height="34.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="600.0" y="168.9" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1F2A44" text-anchor="middle">Expert 2</text>
+<path d="M 405.0 272.0 L 460.0 272.0 L 460.0 165.0 L 525.0 165.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="525.0" y="191.0" width="150.0" height="34.0" rx="9.0" fill="#F0F2F5" stroke="#6B7280" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="600.0" y="211.9" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1F2A44" text-anchor="middle">Expert 3</text>
+<rect x="525.0" y="234.0" width="150.0" height="34.0" rx="9.0" fill="#F0F2F5" stroke="#6B7280" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="600.0" y="254.9" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1F2A44" text-anchor="middle">Expert 4</text>
+<rect x="525.0" y="277.0" width="150.0" height="34.0" rx="9.0" fill="#F0F2F5" stroke="#6B7280" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="600.0" y="297.9" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1F2A44" text-anchor="middle">Expert 5</text>
+<rect x="525.0" y="320.0" width="150.0" height="34.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="600.0" y="340.9" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1F2A44" text-anchor="middle">Expert 6</text>
+<path d="M 405.0 272.0 L 460.0 272.0 L 460.0 337.0 L 525.0 337.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="525.0" y="363.0" width="150.0" height="34.0" rx="9.0" fill="#F0F2F5" stroke="#6B7280" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="600.0" y="383.9" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1F2A44" text-anchor="middle">Expert 7</text>
+<rect x="525.0" y="406.0" width="150.0" height="34.0" rx="9.0" fill="#F0F2F5" stroke="#6B7280" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="600.0" y="426.9" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1F2A44" text-anchor="middle">Expert 8</text>
+<rect x="500.0" y="492.5" width="200.0" height="59.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="600.0" y="518.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Shared expert</text>
+<text x="600.0" y="538.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">every token, optional</text>
+<path d="M 110.0 293.0 L 110.0 522.0 L 500.0 522.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="785.0" y="242.5" width="190.0" height="59.0" rx="29.5" fill="#FFFFFF" stroke="#8A96AB" stroke-width="1.8"/>
+<text x="880.0" y="268.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Weighted sum</text>
+<text x="880.0" y="288.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">router weights</text>
+<path d="M 675.0 165.0 L 760.0 165.0 L 760.0 262.0 L 785.0 272.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 675.0 337.0 L 760.0 337.0 L 760.0 282.0 L 785.0 272.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 700.0 522.0 L 880.0 522.0 L 880.0 301.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<rect x="1015.0" y="251.0" width="130.0" height="42.0" rx="9.0" fill="#E8F3DF" stroke="#4A7A28" stroke-width="1.8"/>
+<text x="1080.0" y="276.5" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Output</text>
+<path d="M 975.0 272.0 L 1015.0 272.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<text x="320.0" y="342.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">--n_experts 8 --moe_top_k 2</text>
+<text x="320.0" y="362.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">plus a small loss that keeps</text>
+<text x="320.0" y="379.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">experts evenly used</text>
+</svg>

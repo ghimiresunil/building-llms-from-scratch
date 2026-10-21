@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="430" viewBox="0 0 1140 430" role="img" aria-label="Training a reward model">
+<title>Training a reward model</title>
+<defs>
+<pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.1" fill="#D9E1EC"/></pattern>
+<marker id="head1F2A44" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1F2A44"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FBFCFE"/>
+<rect width="100%" height="100%" fill="url(#dots)"/>
+<text x="32.0" y="42.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="21" font-weight="700" fill="#1F2A44" text-anchor="start">Training a reward model</text>
+<text x="32.0" y="66.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6780" text-anchor="start">Both answers go through the same network; the loss only cares which one scores higher.</text>
+<rect x="25.0" y="112.5" width="250.0" height="59.0" rx="9.0" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.8"/>
+<text x="150.0" y="138.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Prompt + chosen</text>
+<text x="150.0" y="158.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">the answer people preferred</text>
+<rect x="25.0" y="292.5" width="250.0" height="59.0" rx="9.0" fill="#E2F3F1" stroke="#2B7A76" stroke-width="1.8"/>
+<text x="150.0" y="318.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Prompt + rejected</text>
+<text x="150.0" y="338.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">the other answer</text>
+<rect x="360.0" y="157.0" width="220.0" height="150.0" rx="9.0" fill="#E8EDFC" stroke="#3352C2" stroke-width="1.8"/>
+<text x="470.0" y="218.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">SFT backbone</text>
+<text x="470.0" y="238.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">+ reward head</text>
+<text x="470.0" y="258.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">shared weights</text>
+<rect x="687.3" y="128.0" width="85.4" height="28.0" rx="4" fill="#FBF2D6" stroke="#A97A00" stroke-width="1.3"/>
+<text x="730.0" y="147.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="400" fill="#1F2A44" text-anchor="middle">r chosen</text>
+<rect x="678.6" y="308.0" width="102.8" height="28.0" rx="4" fill="#FBF2D6" stroke="#A97A00" stroke-width="1.3"/>
+<text x="730.0" y="327.0" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="400" fill="#1F2A44" text-anchor="middle">r rejected</text>
+<rect x="830.0" y="202.5" width="260.0" height="59.0" rx="9.0" fill="#FBE6EE" stroke="#B0215A" stroke-width="1.8"/>
+<text x="960.0" y="228.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#1F2A44" text-anchor="middle">Bradley-Terry loss</text>
+<text x="960.0" y="248.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">-log σ(r chosen - r rejected)</text>
+<path d="M 275.0 142.0 L 320.0 142.0 L 320.0 182.0 L 360.0 182.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 275.0 322.0 L 320.0 322.0 L 320.0 282.0 L 360.0 282.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 580.0 182.0 L 640.0 182.0 L 640.0 142.0 L 687.3 142.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 580.0 282.0 L 640.0 282.0 L 640.0 322.0 L 678.6 322.0" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 772.7 142.0 L 960.0 142.0 L 960.0 202.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<path d="M 781.4 322.0 L 960.0 322.0 L 960.0 261.5" fill="none" stroke="#1F2A44" stroke-width="1.7" stroke-linejoin="round" marker-end="url(#head1F2A44)"/>
+<text x="470.0" y="337.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6780" text-anchor="middle">reads each answer at its last real token</text>
+<text x="570.0" y="412.0" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6780" text-anchor="middle">Accuracy on held-out pairs: how often r chosen &gt; r rejected. 50% is a coin flip.</text>
+</svg>
