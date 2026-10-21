@@ -1,0 +1,51 @@
+name: docs
+
+# Build the MkDocs Material site and publish it via GitHub Pages.
+# Pages "Source" must be set to "GitHub Actions" (Settings -> Pages), which it already is.
+# No gh-pages branch needed; this uses the official Pages deployment actions.
+# (Pull requests build the site in ci.yml without deploying it.)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "POST_TRAINING.md"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0  # this action publishes no floating major tag
+        with:
+          python-version: "3.12"
+      - name: Build the site (strict)
+        # uvx runs mkdocs in a throwaway env; MkDocs 2 drops themes and plugins, hence the pin
+        run: uvx --from "mkdocs>=1.6,<2" --with "mkdocs-material>=9.5,<10" --with pymdown-extensions mkdocs build --strict --site-dir ./site
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
