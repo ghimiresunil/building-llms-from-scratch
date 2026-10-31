@@ -178,6 +178,32 @@ python scripts/eval_post_training.py --table logs/stage_table.jsonl
 Every trainer also writes a JSONL metrics file under `logs/` (plottable without
 any external service); pass `--use_wandb true` to also mirror to Weights & Biases.
 
+## 9. Beyond the pipeline (0.4)
+
+```bash
+# clean raw pretraining text before tokenizing it
+python scripts/curate_data.py --input data/raw/train --out_dir data/curated/train
+
+# distill a bigger teacher into the base-sized student (same tokenizer)
+python scripts/train_distill.py --teacher_ckpt models/sft_big.pt --student_ckpt models/base_pretrained.pt
+python scripts/train_distill.py --distill_loss reverse_kl --data_format pretrain \
+  --data_path data/pile_train.h5 --dev_path data/pile_dev.h5
+
+# pass@1 / pass@N / maj@N, then rejection-sampling fine-tuning
+python scripts/rejection_sampling.py --ckpt models/sft.pt --split test --limit 200 --n_samples 8 --no_write
+python scripts/rejection_sampling.py --ckpt models/sft.pt --n_samples 8 --keep correct
+python scripts/train_sft.py --pretrained_ckpt models/sft.pt \
+  --data_path data/rft_packed.h5 --dev_path data/rft_dev_packed.h5 --out_ckpt models/rft.pt
+
+# context extension (arch = "modern"): compare RoPE scalings, then fine-tune at the new length
+python scripts/eval_long_context.py --ckpt models/base_pretrained.pt --data data/pile_dev.h5 --lengths 1024 2048 4096
+python scripts/pretrain_base.py --context_length 4096 --rope_scaling yarn --rope_factor 4 \
+  --rope_original_context 1024 --init_from models/base_pretrained.pt --train_steps 400 --out_ckpt models/base_4k.pt
+
+# continuous batching with a paged KV cache
+python scripts/benchmark_paged.py --ckpt models/sft.pt
+```
+
 ---
 
 ## Design notes (why it's built this way)
