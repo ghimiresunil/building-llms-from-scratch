@@ -154,7 +154,7 @@ def save_stage_ckpt(
         "cfg": _cfg_to_dict(cfg),
         "step": step,
         "metrics": metrics or {},
-        "pytorch_version": torch.__version__,
+        "pytorch_version": str(torch.__version__),
         "cuda_version": torch.version.cuda,
     }
     if extra:

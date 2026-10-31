@@ -26,7 +26,7 @@ if str(ROOT_DIR) not in sys.path:
 
 from config.settings import PRESETS, apply_preset
 from config.settings import default_config as config
-from src.checkpoint import model_state_from_checkpoint
+from src.checkpoint import load_checkpoint, model_state_from_checkpoint
 from src.decorators import log_execution
 from src.device import DEVICE_CHOICES, configure_cpu_threads, resolve_device, sync_step
 from src.models.factory import ARCHITECTURES, build_model
@@ -143,11 +143,8 @@ CHECKPOINT_RE = re.compile(r"checkpoint_step_(\d+)\.pt$")
 
 
 def load_checkpoint_file(path: str, device: str) -> dict[str, Any]:
-    """Load a checkpoint while supporting both newer and older PyTorch versions."""
-    try:
-        return torch.load(path, map_location=torch.device(device), weights_only=False)
-    except TypeError:
-        return torch.load(path, map_location=torch.device(device))
+    """Load a checkpoint with the safe loader (see ``src.checkpoint.load_checkpoint``)."""
+    return load_checkpoint(path, map_location=torch.device(device))
 
 
 def default_checkpoint_dir(out_path: str) -> str:
@@ -237,7 +234,7 @@ def save_training_checkpoint(
         "is_final": is_final,
         "config": dict(train_config),
         "device": train_config["device"],
-        "pytorch_version": torch.__version__,
+        "pytorch_version": str(torch.__version__),
         "cuda_version": torch.version.cuda,
         "lr_state": {
             "current_lr": current_lr(optimizer),
