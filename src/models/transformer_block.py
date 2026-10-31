@@ -1,10 +1,13 @@
 import torch
 import torch.nn as nn
+
 from src.models.attention import MultiHeadAttention
 from src.models.mlp import MLP
 
+
 class Block(nn.Module):
     """A single Transformer block."""
+
     def __init__(self, n_head: int, n_embed: int, context_length: int) -> None:
         """Initializes the Transformer block."""
         super().__init__()
@@ -27,7 +30,8 @@ class Block(nn.Module):
         x = self.mlp.forward_embedding(self.ln2(res))
         return x, res
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # Example Usage (optional, for testing the module independently)
     batch_size = 2
     sequence_length = 5
@@ -36,7 +40,9 @@ if __name__ == '__main__':
     context_len = 5
     input_tensor = torch.randn(batch_size, sequence_length, embedding_dim)
 
-    transformer_block = Block(n_head=num_heads, n_embed=embedding_dim, context_length=context_len)
+    transformer_block = Block(
+        n_head=num_heads, n_embed=embedding_dim, context_length=context_len
+    )
     output_tensor = transformer_block(input_tensor)
 
     print("Transformer Block Input Shape:", input_tensor.shape)

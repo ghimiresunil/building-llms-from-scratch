@@ -19,13 +19,16 @@ def test_top_k_keeps_the_k_most_likely() -> None:
 
 
 def test_top_p_keeps_the_smallest_set_reaching_p() -> None:
-    assert _kept(filter_logits(LOGITS, top_p=0.7)) == [0, 1]   # 0.50 + 0.25 crosses 0.7
-    assert _kept(filter_logits(LOGITS, top_p=0.1)) == [0]      # always keeps the top token
+    assert _kept(filter_logits(LOGITS, top_p=0.7)) == [0, 1]  # 0.50 + 0.25 crosses 0.7
+    assert _kept(filter_logits(LOGITS, top_p=0.1)) == [0]  # always keeps the top token
 
 
 def test_min_p_scales_with_the_top_probability() -> None:
-    assert _kept(filter_logits(LOGITS, min_p=0.4)) == [0, 1]   # keep p >= 0.4 * 0.50 = 0.20
-    flat = torch.zeros(1, 5)                                   # an uncertain step keeps everything
+    assert _kept(filter_logits(LOGITS, min_p=0.4)) == [
+        0,
+        1,
+    ]  # keep p >= 0.4 * 0.50 = 0.20
+    flat = torch.zeros(1, 5)  # an uncertain step keeps everything
     assert _kept(filter_logits(flat, min_p=0.4)) == [0, 1, 2, 3, 4]
 
 

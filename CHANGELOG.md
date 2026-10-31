@@ -1,5 +1,53 @@
 # Changelog
 
+## 0.4.0 (2026-10)
+
+Five techniques from how current models are actually built, each with code, a script, a
+docs page and tests, plus safer checkpoint loading.
+
+### Added
+
+- **Knowledge distillation.** `src/post_training/distill.py` (forward KL, reverse KL and the
+  generalized JSD of GKD, with temperature), `scripts/train_distill.py` and a new `distill`
+  stage (`configs/distill.toml`). The teacher is rebuilt from its own checkpoint, so it can be
+  any size; `data_format` picks packed SFT rows or raw pretraining text.
+- **Test-time compute and rejection sampling.** `src/post_training/test_time.py` (unbiased
+  pass@k, majority voting, best-of-N) and `scripts/rejection_sampling.py`, which reports
+  pass@1 / pass@N / maj@N on GSM8K and writes verified answers as packed SFT data
+  (`--keep correct`, rejection-sampling fine-tuning) or every answer (`--keep all`,
+  sequence-level distillation).
+- **RoPE context extension.** `rope_scaling = "linear" | "ntk" | "yarn"` with `rope_factor` and
+  `rope_original_context` in `configs/base.toml` and `ModernConfig`; stored in checkpoints.
+  `scripts/eval_long_context.py` compares the methods at several lengths, and
+  `pretrain_base.py --init_from` starts a run from existing weights at step 0 with a fresh
+  optimizer, for the fine-tune at the longer length.
+- **Paged KV cache and continuous batching.** `src/inference/paged.py`: a block allocator, a
+  paged cache and an engine that admits, decodes and retires requests every step, preempting
+  (and later recomputing) the newest request when blocks run out. Supports GQA/MQA/MHA,
+  sliding windows, MoE and scaled RoPE. `scripts/benchmark_paged.py` compares it with
+  one-at-a-time generation and reports the KV memory saved.
+- **Data curation.** `src/curation/` (Gopher/C4-style quality filters, exact deduplication,
+  MinHash with LSH banding for near-duplicates) and `scripts/curate_data.py`, which reads and
+  writes `.jsonl(.zst)` so its output feeds `data_preprocess.py` unchanged.
+- Docs pages for each: data curation, distillation, test-time compute, context extension and
+  paged serving.
+- Tests for all of it, including `tests/test_scripts_v04_e2e.py`, which runs every new script
+  end to end and needs no network access.
+
+### Changed
+
+- **Checkpoints load with `torch.load(weights_only=True)`.** A file that needs full unpickling
+  is refused with an explanation; set `BLFS_TRUST_CHECKPOINTS=1` (or pass `trusted=True`) to
+  load one you made yourself. Checkpoints now store `pytorch_version` as a plain string; older
+  files, which stored `torch.__version__` itself, are still accepted.
+- **Ruff now checks `src/models/`.** The exclude entry `"models"` (meant for the checkpoint
+  folder) also matched `src/models/`, so the classic and modern model code was never linted or
+  formatted. The excludes are now anchored to the repo root (`"./models"`), and `src/models/`
+  and `tests/`, which had missed the 0.3.0 reformat, are formatted. Markdown is excluded, so
+  code samples in the docs keep their hand alignment.
+- `src.curation`, `src.post_training.distill` and `src.post_training.test_time` are checked by
+  mypy with `disallow_untyped_defs`, and the new modules are shape-checked in the tests.
+
 ## 0.3.0 (2026-10)
 
 The project has a new home, [ghimiresunil/building-llms-from-scratch](https://github.com/ghimiresunil/building-llms-from-scratch),

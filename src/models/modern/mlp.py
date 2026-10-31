@@ -15,5 +15,7 @@ class SwiGLU(nn.Module):
         self.up = nn.Linear(n_embed, hidden, bias=False)
         self.down = nn.Linear(hidden, n_embed, bias=False)
 
-    def forward(self, x: Float[Tensor, "*batch embed"]) -> Float[Tensor, "*batch embed"]:
+    def forward(
+        self, x: Float[Tensor, "*batch embed"]
+    ) -> Float[Tensor, "*batch embed"]:
         return self.down(F.silu(self.gate(x)) * self.up(x))

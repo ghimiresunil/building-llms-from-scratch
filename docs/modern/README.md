@@ -105,6 +105,7 @@ The architecture:
 
 - [Building blocks: RMSNorm, SwiGLU, tied embeddings, initialization](blocks.md)
 - [Rotary position embeddings](rope.md)
+- [Context extension: linear, NTK and YaRN](context_extension.md)
 - [Attention: GQA, MLA, QK-norm, sliding windows and the KV cache](attention.md)
 - [Mixture of Experts](moe.md)
 
@@ -115,3 +116,4 @@ Training and using it:
 - [RL for reasoning: GRPO, Dr. GRPO, DAPO and GSPO](rl_reasoning.md)
 - [LoRA](lora.md)
 - [Inference: sampling, the KV cache, speculative decoding and int8](inference.md)
+- [Serving many requests: the paged KV cache and continuous batching](paged_serving.md)

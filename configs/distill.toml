@@ -1,0 +1,37 @@
+# Knowledge distillation (scripts/train_distill.py).
+# The student's size comes from configs/base.toml (like every stage); the teacher is
+# rebuilt from the settings stored in its own checkpoint, so it can be any size as long
+# as it uses the same tokenizer.
+
+[default]
+teacher_ckpt = "models/sft.pt"            # e.g. an SFT model trained at the 77m size
+student_ckpt = "models/base_pretrained.pt"  # "none" = start the student from random weights
+data_format = "sft"                       # "sft" (packed chat rows, loss on replies) | "pretrain" (raw text)
+data_path = "data/sft_packed.h5"
+dev_path = "data/sft_dev_packed.h5"
+out_ckpt = "models/distill.pt"
+distill_loss = "forward_kl"               # "forward_kl" | "reverse_kl" | "jsd"
+distill_temperature = 2.0                 # softens both distributions; > 1 shows more "dark knowledge"
+distill_alpha = 0.9                       # weight on the teacher; 1 - alpha goes to plain cross-entropy
+jsd_beta = 0.5                            # jsd only: 0 behaves like forward KL, 1 like reverse KL
+batch_size = 16
+grad_accum = 2
+max_steps = 2000
+eval_steps = 200
+warmup_steps = 100
+lr = 1e-4
+min_lr = 1e-5
+weight_decay = 0.0
+grad_clip = 1.0
+save_every = 500
+
+[default.smoke]
+teacher_ckpt = "models/smoke/sft.pt"
+student_ckpt = "models/smoke/base_pretrained.pt"
+out_ckpt = "models/smoke/distill.pt"
+max_steps = 10
+batch_size = 4
+grad_accum = 1
+eval_steps = 10000
+warmup_steps = 2
+save_every = 10000

@@ -19,11 +19,19 @@ class ModernBlock(nn.Module):
         super().__init__()
         self.attn_norm = RMSNorm(cfg.n_embed, cfg.norm_eps)
         self.attn: nn.Module = (
-            MultiHeadLatentAttention(cfg, layer_idx) if cfg.attention == "mla" else GroupedQueryAttention(cfg, layer_idx)
+            MultiHeadLatentAttention(cfg, layer_idx)
+            if cfg.attention == "mla"
+            else GroupedQueryAttention(cfg, layer_idx)
         )
         self.mlp_norm = RMSNorm(cfg.n_embed, cfg.norm_eps)
         self.mlp: nn.Module = (
-            MoE(cfg.n_embed, cfg.hidden_dim, cfg.n_experts, cfg.moe_top_k, cfg.n_shared_experts)
+            MoE(
+                cfg.n_embed,
+                cfg.hidden_dim,
+                cfg.n_experts,
+                cfg.moe_top_k,
+                cfg.n_shared_experts,
+            )
             if cfg.n_experts > 0
             else SwiGLU(cfg.n_embed, cfg.hidden_dim)
         )

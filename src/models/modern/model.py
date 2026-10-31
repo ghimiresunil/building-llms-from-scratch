@@ -31,14 +31,25 @@ class ModernTransformer(nn.Module):
         self.gradient_checkpointing = False
         self.token_embed = nn.Embedding(config.vocab_size, config.n_embed)
         self.drop = nn.Dropout(config.dropout)
-        self.blocks = nn.ModuleList([ModernBlock(config, i) for i in range(config.n_blocks)])
+        self.blocks = nn.ModuleList(
+            [ModernBlock(config, i) for i in range(config.n_blocks)]
+        )
         self.final_norm = RMSNorm(config.n_embed, config.norm_eps)
         self.lm_head = nn.Linear(config.n_embed, config.vocab_size, bias=False)
         if config.tie_embeddings:
             self.lm_head.weight = self.token_embed.weight
 
-        cos, sin = rope_cache(config.rope_table_dim, config.context_length, config.rope_theta)
-        self.register_buffer("rope_cos", cos, persistent=False)  # rebuilt on load, never saved
+        cos, sin = rope_cache(
+            config.rope_table_dim,
+            config.context_length,
+            config.rope_theta,
+            scaling=config.rope_scaling,
+            factor=config.rope_factor,
+            original_context=config.original_context,
+        )
+        self.register_buffer(
+            "rope_cos", cos, persistent=False
+        )  # rebuilt on load, never saved
         self.register_buffer("rope_sin", sin, persistent=False)
         self.aux_loss: Tensor | None = None
 
@@ -64,7 +75,9 @@ class ModernTransformer(nn.Module):
         T = idx.size(1)
         start = cache.length if cache is not None else 0
         if start + T > self.context_length:
-            raise ValueError(f"sequence of {start + T} tokens exceeds context_length {self.context_length}")
+            raise ValueError(
+                f"sequence of {start + T} tokens exceeds context_length {self.context_length}"
+            )
         cos, sin = self.rope_cos[start : start + T], self.rope_sin[start : start + T]
         x = self.drop(self.token_embed(idx))
         for block in self.blocks:
@@ -78,18 +91,26 @@ class ModernTransformer(nn.Module):
         return self.final_norm(x)
 
     def forward(
-        self, idx: Int[Tensor, "batch seq"], targets: Int[Tensor, "batch seq"] | None = None
+        self,
+        idx: Int[Tensor, "batch seq"],
+        targets: Int[Tensor, "batch seq"] | None = None,
     ) -> tuple[Float[Tensor, "batch seq vocab"], Float[Tensor, ""] | None]:
         logits = self.lm_head(self.forward_hidden(idx))
         loss = None
         if targets is not None:
-            loss = F.cross_entropy(logits.reshape(-1, logits.size(-1)), targets.reshape(-1).long())
+            loss = F.cross_entropy(
+                logits.reshape(-1, logits.size(-1)), targets.reshape(-1).long()
+            )
             if self.aux_loss is not None:
                 loss = loss + self.config.moe_aux_loss_coef * self.aux_loss
         return logits, loss
 
     def _moe_aux_loss(self) -> Tensor | None:
-        losses = [b.mlp.aux_loss for b in self.blocks if isinstance(b.mlp, MoE) and b.mlp.aux_loss is not None]
+        losses = [
+            b.mlp.aux_loss
+            for b in self.blocks
+            if isinstance(b.mlp, MoE) and b.mlp.aux_loss is not None
+        ]
         return torch.stack(losses).mean() if losses else None
 
     # ------------------------------------------------------------------ generation
@@ -101,8 +122,16 @@ class ModernTransformer(nn.Module):
             heads, k_dim, v_dim = 1, cfg.latent_dim, cfg.mla_rope_dim
         else:
             heads, k_dim, v_dim = cfg.kv_heads, cfg.head_dim, cfg.head_dim
-        return KVCache(cfg.n_blocks, batch_size, cfg.context_length, heads, k_dim, v_dim,
-                       device=ref.device, dtype=ref.dtype)
+        return KVCache(
+            cfg.n_blocks,
+            batch_size,
+            cfg.context_length,
+            heads,
+            k_dim,
+            v_dim,
+            device=ref.device,
+            dtype=ref.dtype,
+        )
 
     @torch.no_grad()
     def generate(
@@ -121,7 +150,10 @@ class ModernTransformer(nn.Module):
         if not use_cache:
             for _ in range(max_new_tokens):
                 logits = self(idx[:, -window:])[0][:, -1, :]
-                idx = torch.cat([idx, sample_next_token(logits, temperature, top_k, top_p, min_p)], dim=1)
+                idx = torch.cat(
+                    [idx, sample_next_token(logits, temperature, top_k, top_p, min_p)],
+                    dim=1,
+                )
             return idx
 
         cache = self.new_cache(idx.size(0))

@@ -18,11 +18,15 @@ checkpoint's saved `cfg`, so you never re-specify `n_embed`/`n_blocks`, and it t
 reward-head key prefixes:
 
 ```python
-ck = torch.load(ckpt_path, map_location="cpu", weights_only=False)
+ck = load_checkpoint(ckpt_path)  # torch.load(..., weights_only=True): never runs pickled code
 cfg = {**(ck.get("cfg") or {}), **(overrides or {})}
 model = Transformer(n_head=cfg["n_head"], n_embed=cfg["n_embed"], ...)
 state = {k.removeprefix("module.").removeprefix("transformer."): v for k, v in state.items()}
 ```
+
+Checkpoints are read with PyTorch's safe loader, which refuses files that would need to run
+pickled code. If an old checkpoint of your own is refused, set `BLFS_TRUST_CHECKPOINTS=1` to
+load it once; never do that for a file someone else gave you.
 
 ## Chat vs raw
 

@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import os
+import pickle
 import tempfile
 from collections.abc import Mapping
 from typing import Any, TypeVar
 
 import torch
 import torch.nn as nn
+from torch.torch_version import TorchVersion
 
 V = TypeVar("V")
 
@@ -47,14 +49,39 @@ def strip_wrapper_prefixes(
     return cleaned
 
 
+TRUST_ENV = "BLFS_TRUST_CHECKPOINTS"
+
+
+def _trusted_by_env() -> bool:
+    return os.environ.get(TRUST_ENV, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
 def load_checkpoint(
-    path: str | os.PathLike[str], map_location: Any = "cpu"
+    path: str | os.PathLike[str],
+    map_location: Any = "cpu",
+    *,
+    trusted: bool | None = None,
 ) -> dict[str, Any]:
-    """Load a checkpoint dict on any PyTorch version (our files hold metadata, not just tensors)."""
+    """Load a checkpoint dict with PyTorch's safe loader, which refuses to run pickled code.
+
+    Our checkpoints hold only tensors, numbers, strings, lists and dicts, so
+    ``weights_only=True`` reads them. A file that needs full unpickling (an old checkpoint
+    with custom objects, or a file from someone else) is refused unless you trust it:
+    pass ``trusted=True`` or set ``BLFS_TRUST_CHECKPOINTS=1``. Unpickling can run arbitrary
+    code, so only do that for files you made yourself.
+    """
     try:
+        # Older checkpoints stored torch.__version__, a harmless str subclass; allow it.
+        with torch.serialization.safe_globals([TorchVersion]):
+            return torch.load(path, map_location=map_location, weights_only=True)
+    except pickle.UnpicklingError as err:
+        if not (trusted if trusted is not None else _trusted_by_env()):
+            raise RuntimeError(
+                f"{os.fspath(path)} contains Python objects that the safe loader refuses "
+                f"({str(err).splitlines()[0]}). Loading it fully could run arbitrary code. "
+                f"If you made this file yourself, set {TRUST_ENV}=1 to load it anyway."
+            ) from None
         return torch.load(path, map_location=map_location, weights_only=False)
-    except TypeError:  # PyTorch < 1.13 has no weights_only argument
-        return torch.load(path, map_location=map_location)
 
 
 def model_state_from_checkpoint(

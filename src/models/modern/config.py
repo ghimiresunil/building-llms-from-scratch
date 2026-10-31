@@ -6,6 +6,8 @@ from collections.abc import Mapping
 from dataclasses import asdict, dataclass, fields
 from typing import Any, Literal
 
+from src.models.modern.rope import ROPE_SCALINGS, RopeScaling
+
 AttentionKind = Literal["gqa", "mla"]
 
 
@@ -25,9 +27,17 @@ class ModernConfig:
     # attention
     attention: AttentionKind = "gqa"
     n_kv_head: int | None = None  # None = n_head (plain multi-head); 1 = multi-query
-    kv_latent_dim: int | None = None  # MLA: size of the cached key/value latent; None = n_embed // 4
-    rope_dim: int | None = None  # MLA: per-head dims that carry position; None = head_dim // 2
+    kv_latent_dim: int | None = (
+        None  # MLA: size of the cached key/value latent; None = n_embed // 4
+    )
+    rope_dim: int | None = (
+        None  # MLA: per-head dims that carry position; None = head_dim // 2
+    )
     rope_theta: float = 10_000.0
+    # context extension: run past the length the model was trained on (see rope.py)
+    rope_scaling: RopeScaling = "none"
+    rope_factor: float = 1.0
+    rope_original_context: int | None = None  # None = context_length / rope_factor
     qk_norm: bool = True
     attn_gate: bool = False
     sliding_window: int | None = None
@@ -50,17 +60,42 @@ class ModernConfig:
         for name in ("vocab_size", "context_length", "n_embed", "n_head", "n_blocks"):
             need(getattr(self, name) > 0, f"{name} must be positive")
         need(self.n_embed % self.n_head == 0, "n_embed must be divisible by n_head")
-        need(self.head_dim % 2 == 0, "head_dim (n_embed / n_head) must be even for rotary embeddings")
+        need(
+            self.head_dim % 2 == 0,
+            "head_dim (n_embed / n_head) must be even for rotary embeddings",
+        )
         need(self.attention in ("gqa", "mla"), "attention must be 'gqa' or 'mla'")
         need(self.n_head % self.kv_heads == 0, "n_head must be divisible by n_kv_head")
         need(self.mla_rope_dim % 2 == 0, "rope_dim must be even")
-        need(self.sliding_window is None or self.sliding_window > 0, "sliding_window must be positive")
+        need(
+            self.sliding_window is None or self.sliding_window > 0,
+            "sliding_window must be positive",
+        )
+        need(
+            self.rope_scaling in ROPE_SCALINGS,
+            f"rope_scaling must be one of {ROPE_SCALINGS}",
+        )
+        need(self.rope_factor >= 1.0, "rope_factor must be >= 1")
+        need(
+            self.rope_original_context is None or self.rope_original_context > 0,
+            "rope_original_context must be positive",
+        )
         need(self.n_experts >= 0, "n_experts must be >= 0")
         if self.n_experts:
-            need(1 <= self.moe_top_k <= self.n_experts, "moe_top_k must be between 1 and n_experts")
+            need(
+                1 <= self.moe_top_k <= self.n_experts,
+                "moe_top_k must be between 1 and n_experts",
+            )
         need(0.0 <= self.dropout < 1.0, "dropout must be in [0, 1)")
 
     # ------------------------------------------------------------------ derived sizes
+    @property
+    def original_context(self) -> int:
+        """The context length the model was trained on, before any RoPE scaling."""
+        if self.rope_original_context is not None:
+            return self.rope_original_context
+        return max(1, round(self.context_length / self.rope_factor))
+
     @property
     def head_dim(self) -> int:
         return self.n_embed // self.n_head

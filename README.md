@@ -39,6 +39,7 @@ You don't need a big GPU to get going. The smallest model trains on an ordinary 
   - [6. Learning from preferences: reward model and DPO](#6-learning-from-preferences-reward-model-and-dpo)
   - [7. Reinforcement learning: PPO and GRPO](#7-reinforcement-learning-ppo-and-grpo)
   - [8. Measuring progress and chatting](#8-measuring-progress-and-chatting)
+  - [9. Beyond the pipeline](#9-beyond-the-pipeline)
 - [Classic vs. modern architecture](#classic-vs-modern-architecture)
 - [How big a model can I train?](#how-big-a-model-can-i-train)
 - [Tests and checks](#tests-and-checks)
@@ -171,9 +172,10 @@ At `DEBUG`, `@log_execution` also logs each call's arguments and return value, s
 | `src/models/` | The classic Transformer, built from separate files for the MLP, attention, block and full model |
 | `src/models/modern/` | A second, Llama-style model: RoPE, RMSNorm, SwiGLU, grouped-query and latent attention, MoE, KV cache |
 | `src/tokenizer/` | A byte-level BPE tokenizer written from scratch |
-| `src/post_training/` | SFT, the reward model, DPO and its variants, PPO, GRPO, evaluation and chat |
+| `src/post_training/` | SFT, the reward model, DPO and its variants, PPO, GRPO, distillation, test-time compute, evaluation and chat |
 | `src/optim/` | The Muon optimizer and learning-rate schedules |
-| `src/inference/` | Sampling strategies, speculative decoding, int8 weights |
+| `src/inference/` | Sampling strategies, speculative decoding, int8 weights, a paged KV cache with continuous batching |
+| `src/curation/` | Quality filters and MinHash deduplication for pretraining text |
 | `config/` | `settings.py`: loads every setting with Dynaconf and validates it |
 | `src/decorators/` | The shared logger and the `@log_execution` decorator |
 | `configs/` | The TOML settings files |
@@ -358,6 +360,40 @@ Comparing the base model and the SFT model on the same prompt is the quickest wa
 
 Once a base model exists and the data is prepared, `bash scripts/run_posttraining.sh` runs every post-training stage and the evaluation table in one go. Set `NPROC=1` for a single GPU, or `BLFS_ENV=smoke` for a tiny dry run.
 
+### 9. Beyond the pipeline
+
+Five techniques that real model builders lean on, each with its own script and docs page.
+
+**Clean the data first.** `scripts/curate_data.py` drops low-quality pages with Gopher/C4-style rules and removes exact and near-duplicate documents with MinHash. Its output is ready for `data_preprocess.py`. [Data curation](docs/data_curation.md)
+
+```bash
+python scripts/curate_data.py --input data/raw/train --out_dir data/curated/train
+```
+
+**Learn from a bigger model.** `scripts/train_distill.py` trains a small student to match a teacher's token distributions, with forward KL, reverse KL or generalized JSD. The teacher can be any size, as long as it uses the same tokenizer. [Knowledge distillation](docs/10_distillation.md)
+
+```bash
+python scripts/train_distill.py --teacher_ckpt models/sft_big.pt --student_ckpt models/base_pretrained.pt
+```
+
+**Spend compute at answer time.** `scripts/rejection_sampling.py` samples several answers per GSM8K question and reports pass@1, pass@N and majority-vote accuracy. With `--keep correct` it also writes the verified answers as SFT data, for rejection-sampling fine-tuning: the baseline GRPO has to beat. [Test-time compute](docs/11_test_time_compute.md)
+
+```bash
+python scripts/rejection_sampling.py --ckpt models/sft.pt --n_samples 8 --keep correct
+```
+
+**Read longer inputs than you trained on.** The modern model supports linear, NTK-aware and YaRN scaling of its rotary embeddings (`rope_scaling`, `rope_factor`). `scripts/eval_long_context.py` compares them, and `pretrain_base.py --init_from` runs the short fine-tune at the new length. [Context extension](docs/modern/context_extension.md)
+
+```bash
+python scripts/eval_long_context.py --ckpt models/base_pretrained.pt --data data/pile_dev.h5 --lengths 256 512 1024
+```
+
+**Serve many requests at once.** `src/inference/paged.py` stores the KV cache in fixed-size blocks and schedules every step, adding and retiring requests mid-batch, like vLLM. `scripts/benchmark_paged.py` compares it with one-at-a-time generation and shows the memory saved. [Paged serving](docs/modern/paged_serving.md)
+
+```bash
+python scripts/benchmark_paged.py
+```
+
 ## Classic vs. modern architecture
 
 The classic model is the right one to learn from because every part is spelled out by hand. Open models released in the last few years keep the same overall layout but change most of the parts inside it. The modern model in `src/models/modern/` makes those changes, and every training script accepts `--arch modern` (or `arch = "modern"` in `configs/base.toml`):
@@ -369,7 +405,7 @@ The classic model is the right one to learn from because every part is spelled o
 | Feed-forward | ReLU | SwiGLU |
 | Attention | Separate keys and values per head | Shared across head groups (GQA), or compressed (MLA) |
 | Generation | Recomputes the whole sequence each step | Keeps a KV cache |
-| Optional | | Mixture of Experts, sliding-window attention, tied embeddings |
+| Optional | | Mixture of Experts, sliding-window attention, tied embeddings, RoPE scaling (linear, NTK, YaRN) |
 
 [The modern architecture notes](docs/modern/README.md) cover each change: what it is, why it helps, and where it is in the code.
 
@@ -413,7 +449,7 @@ uv run mypy
 uv run ruff check .
 ```
 
-A few tests need internet access the first time they run, because `tiktoken` downloads its `r50k_base` vocabulary file on first use.
+A few tests need internet access the first time they run, because `tiktoken` downloads its `r50k_base` vocabulary file on first use. The end-to-end test for the 0.4 scripts (`tests/test_scripts_v04_e2e.py`) needs no tokenizer and runs offline.
 
 ## Troubleshooting
 
@@ -424,6 +460,8 @@ A few tests need internet access the first time they run, because `tiktoken` dow
 **"unknown key" or "must be a number".** The message names the file or `BLFS_` variable the bad value came from. Fix it there, or run with `--print-config` to see every resolved value.
 
 **Running out of GPU memory.** Try `--amp`, `--grad-checkpointing` and `--grad-accum` with the classic script. For post-training, lower `batch_size` and raise `grad_accum` in your `.local.toml`. Then check the numbers with `model_report.py`.
+
+**"contains Python objects that the safe loader refuses".** Checkpoints load with `torch.load(weights_only=True)`, which never runs pickled code. If the file is one you made yourself, with an older version of the repo, set `BLFS_TRUST_CHECKPOINTS=1` for that run. Don't do it for files from anyone else.
 
 **I want to try something without a long wait.** Add `--env smoke` to any post-training script.
 

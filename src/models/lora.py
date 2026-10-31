@@ -12,13 +12,17 @@ from torch import Tensor
 
 # Linear layers adapted by default: the attention projections of both architectures, and the
 # MLP output projection of the classic model (it is also named "proj").
-DEFAULT_TARGETS = frozenset({"query", "key", "value", "proj", "q_proj", "k_proj", "v_proj", "o_proj"})
+DEFAULT_TARGETS = frozenset(
+    {"query", "key", "value", "proj", "q_proj", "k_proj", "v_proj", "o_proj"}
+)
 
 
 class LoRALinear(nn.Module):
     """A frozen ``nn.Linear`` plus a trainable low-rank update ``(alpha / r) * B @ A``."""
 
-    def __init__(self, base: nn.Linear, rank: int, alpha: float = 16.0, dropout: float = 0.0) -> None:
+    def __init__(
+        self, base: nn.Linear, rank: int, alpha: float = 16.0, dropout: float = 0.0
+    ) -> None:
         super().__init__()
         if rank <= 0:
             raise ValueError("LoRA rank must be positive")
@@ -27,8 +31,12 @@ class LoRALinear(nn.Module):
             p.requires_grad_(False)
         self.rank, self.scaling = rank, alpha / rank
         w = base.weight
-        self.lora_A = nn.Parameter(torch.empty(rank, base.in_features, device=w.device, dtype=w.dtype))
-        self.lora_B = nn.Parameter(torch.zeros(base.out_features, rank, device=w.device, dtype=w.dtype))
+        self.lora_A = nn.Parameter(
+            torch.empty(rank, base.in_features, device=w.device, dtype=w.dtype)
+        )
+        self.lora_B = nn.Parameter(
+            torch.zeros(base.out_features, rank, device=w.device, dtype=w.dtype)
+        )
         nn.init.kaiming_uniform_(self.lora_A, a=math.sqrt(5))  # same init as nn.Linear
         self.dropout: nn.Module = nn.Dropout(dropout) if dropout > 0 else nn.Identity()
 
@@ -46,10 +54,17 @@ class LoRALinear(nn.Module):
 
     def merged(self) -> nn.Linear:
         """A plain ``nn.Linear`` with the update folded in: ``W + scaling * B @ A``."""
-        out = nn.Linear(self.in_features, self.out_features, bias=self.base.bias is not None,
-                        device=self.base.weight.device, dtype=self.base.weight.dtype)
+        out = nn.Linear(
+            self.in_features,
+            self.out_features,
+            bias=self.base.bias is not None,
+            device=self.base.weight.device,
+            dtype=self.base.weight.dtype,
+        )
         with torch.no_grad():
-            out.weight.copy_(self.base.weight + self.scaling * (self.lora_B @ self.lora_A))
+            out.weight.copy_(
+                self.base.weight + self.scaling * (self.lora_B @ self.lora_A)
+            )
             if self.base.bias is not None:
                 out.bias.copy_(self.base.bias)
         return out
@@ -71,7 +86,9 @@ def apply_lora(
         for child_name, child in list(parent.named_children()):
             if child_name in targets and isinstance(child, nn.Linear):
                 setattr(parent, child_name, LoRALinear(child, rank, alpha, dropout))
-                wrapped.append(f"{parent_name}.{child_name}" if parent_name else child_name)
+                wrapped.append(
+                    f"{parent_name}.{child_name}" if parent_name else child_name
+                )
     if not wrapped:
         raise ValueError(f"no nn.Linear layer named one of {sorted(targets)} was found")
     return wrapped

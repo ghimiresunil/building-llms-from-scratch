@@ -16,7 +16,11 @@ import time
 import torch
 
 from data_loader.data_loader import get_batch_iterator
-from src.checkpoint import load_checkpoint, model_state_from_checkpoint
+from src.checkpoint import (
+    load_checkpoint,
+    load_model_weights,
+    model_state_from_checkpoint,
+)
 from src.decorators import log_execution
 from src.optim import build_optimizer, lr_at, set_lr
 from src.post_training.cli import parse_stage
@@ -55,7 +59,13 @@ def estimate_loss(model, cfg, ctx, iters: int) -> dict[str, float]:
 @log_execution
 def main():
     resume_flag = {
-        "--resume": dict(type=str, default=None, help="checkpoint to resume from")
+        "--resume": dict(type=str, default=None, help="checkpoint to resume from"),
+        "--init_from": dict(
+            type=str,
+            default=None,
+            help="start from these weights at step 0 with a fresh optimizer "
+            "(e.g. context extension: a longer --context_length plus --rope_scaling)",
+        ),
     }
     cfg, extras = parse_stage("pretrain", extra=resume_flag)
     resume = extras.resume
@@ -66,6 +76,13 @@ def main():
     model = build_model_from_config(cfg).to(ctx.device)
     start_step = 0
     ck = None
+    if extras.init_from:
+        init = model_state_from_checkpoint(
+            load_checkpoint(extras.init_from, map_location="cpu")
+        )
+        load_model_weights(model, init, source=extras.init_from)
+        if ctx.is_main:
+            print(f"Initialized from {extras.init_from} (step 0, fresh optimizer)")
     if resume and os.path.exists(resume):
         ck = load_checkpoint(resume, map_location="cpu")
         # Strip DDP / torch.compile prefixes so checkpoints from older runs load too (issue #36).

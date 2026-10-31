@@ -18,7 +18,7 @@ else:  # pragma: no cover - Python 3.10
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONFIG_DIR = REPO_ROOT / "configs"
-STAGES = ("pretrain", "sft", "reward", "dpo", "ppo", "grpo")
+STAGES = ("pretrain", "sft", "reward", "dpo", "ppo", "grpo", "distill")
 
 ENVVAR_PREFIX = "BLFS"
 ENV_VARIABLE = "BLFS_ENV"
@@ -32,6 +32,8 @@ NULLABLE: dict[str, type] = {
     "kv_latent_dim": int,
     "sliding_window": int,
     "clip_high": float,
+    "rope_original_context": int,
+    "student_ckpt": str,
 }
 
 CHOICES: dict[str, list[str]] = {
@@ -45,6 +47,9 @@ CHOICES: dict[str, list[str]] = {
     "adv_norm": ["std", "none"],
     "loss_agg": ["token-mean", "seq-mean-token-mean", "seq-mean-token-sum-norm"],
     "ratio_level": ["token", "sequence"],
+    "rope_scaling": ["none", "linear", "ntk", "yarn"],
+    "distill_loss": ["forward_kl", "reverse_kl", "jsd"],
+    "data_format": ["sft", "pretrain"],
     "log_level": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
 }
 
@@ -58,6 +63,7 @@ _POSITIVE = (
     "grad_accum",
     "n_kv_head",
     "group_size",
+    "rope_original_context",
 )
 _TRUE = {"true", "1", "yes", "y", "on"}
 _FALSE = {"false", "0", "no", "n", "off"}
@@ -317,6 +323,34 @@ def _validators(keys: set[str]) -> list[Validator]:
                 },
             )
         )
+    if "rope_factor" in keys:
+        out.append(
+            Validator(
+                "rope_factor",
+                gte=1.0,
+                messages={"operations": "rope_factor must be >= 1, got {value}"},
+            )
+        )
+    if "distill_temperature" in keys:
+        out.append(
+            Validator(
+                "distill_temperature",
+                gt=0.0,
+                messages={
+                    "operations": "distill_temperature must be positive, got {value}"
+                },
+            )
+        )
+    for key in ("distill_alpha", "jsd_beta"):
+        if key in keys:
+            out.append(
+                Validator(
+                    key,
+                    gte=0.0,
+                    lte=1.0,
+                    messages={"operations": "{name} must be in [0, 1], got {value}"},
+                )
+            )
     if "group_size" in keys:
         out.append(
             Validator(

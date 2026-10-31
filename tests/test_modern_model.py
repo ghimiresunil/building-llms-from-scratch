@@ -19,7 +19,9 @@ from src.models.modern import (
     rope_cache,
 )
 
-BASE = ModernConfig(vocab_size=97, context_length=32, n_embed=32, n_head=4, n_blocks=2, n_kv_head=2)
+BASE = ModernConfig(
+    vocab_size=97, context_length=32, n_embed=32, n_head=4, n_blocks=2, n_kv_head=2
+)
 
 VARIANTS = {
     "gqa": BASE,
@@ -28,7 +30,9 @@ VARIANTS = {
     "mla": replace(BASE, attention="mla", kv_latent_dim=12, rope_dim=4),
     "window": replace(BASE, sliding_window=5),
     "moe": replace(BASE, n_experts=4, moe_top_k=2, n_shared_experts=1),
-    "gated_no_qknorm": replace(BASE, attn_gate=True, qk_norm=False, tie_embeddings=False),
+    "gated_no_qknorm": replace(
+        BASE, attn_gate=True, qk_norm=False, tie_embeddings=False
+    ),
 }
 
 
@@ -87,7 +91,9 @@ def test_sliding_window_limits_what_a_token_sees() -> None:
     model = _model(cfg)
     idx = torch.randint(0, cfg.vocab_size, (1, 16))
     changed = idx.clone()
-    changed[:, 5] = (changed[:, 5] + 1) % cfg.vocab_size  # outside the window of position 9..15
+    changed[:, 5] = (
+        changed[:, 5] + 1
+    ) % cfg.vocab_size  # outside the window of position 9..15
     with torch.no_grad():
         a, _ = model(idx)
         b, _ = model(changed)
@@ -106,7 +112,9 @@ def test_rope_scores_depend_only_on_relative_position() -> None:
         return float(qm @ kn)
 
     assert math.isclose(score(10, 3), score(40, 33), rel_tol=1e-4, abs_tol=1e-4)
-    assert math.isclose(score(5, 5), float(q @ k), rel_tol=1e-4, abs_tol=1e-4)  # same position: no change
+    assert math.isclose(
+        score(5, 5), float(q @ k), rel_tol=1e-4, abs_tol=1e-4
+    )  # same position: no change
 
 
 def test_rope_is_a_rotation_of_each_pair() -> None:
@@ -119,7 +127,9 @@ def test_rope_is_a_rotation_of_each_pair() -> None:
     half = dim // 2
     for i in range(half):
         angle = m * 10_000.0 ** (-2 * i / dim)
-        rot = torch.tensor([[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]])
+        rot = torch.tensor(
+            [[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]]
+        )
         expected = rot @ torch.stack([x[i], x[i + half]])
         assert torch.allclose(torch.stack([out[i], out[i + half]]), expected, atol=1e-5)
     assert torch.allclose(out.norm(), x.norm(), atol=1e-5)  # rotations keep the length
@@ -146,7 +156,9 @@ def test_gqa_equals_mha_with_shared_heads() -> None:
         mha.o_proj.weight.copy_(gqa.o_proj.weight)
         for proj in ("k_proj", "v_proj"):
             w = getattr(gqa, proj).weight.view(2, D, -1)  # (kv_heads, D, C)
-            getattr(mha, proj).weight.copy_(w.repeat_interleave(2, dim=0).reshape(4 * D, -1))
+            getattr(mha, proj).weight.copy_(
+                w.repeat_interleave(2, dim=0).reshape(4 * D, -1)
+            )
     x = torch.randn(2, 9, BASE.n_embed)
     cos, sin = rope_cache(D, 9)
     assert torch.allclose(gqa(x, cos, sin), mha(x, cos, sin), atol=1e-5)
@@ -165,8 +177,13 @@ def test_moe_routes_tokens_and_balancing_loss_trains_the_router() -> None:
     x = torch.randn(2, 10, 16)
     y = moe(x)
     assert y.shape == x.shape
-    assert moe.tokens_per_expert is not None and moe.tokens_per_expert.sum().item() == 2 * 10 * 2
-    assert moe.aux_loss is not None and moe.aux_loss.item() >= 0.99  # == 1 only for perfect balance
+    assert (
+        moe.tokens_per_expert is not None
+        and moe.tokens_per_expert.sum().item() == 2 * 10 * 2
+    )
+    assert (
+        moe.aux_loss is not None and moe.aux_loss.item() >= 0.99
+    )  # == 1 only for perfect balance
     moe.aux_loss.backward()
     assert moe.router.weight.grad is not None and moe.router.weight.grad.abs().sum() > 0
 
@@ -186,14 +203,25 @@ def test_post_training_adds_the_moe_balancing_loss() -> None:
     from src.post_training.utils import moe_balance_loss
 
     model = _model(VARIANTS["moe"])
-    logits, _ = model(torch.randint(0, BASE.vocab_size, (2, 8)))  # no targets, like the SFT trainer
-    extra = moe_balance_loss(torch.nn.DataParallel(model))  # wrappers are looked through
+    logits, _ = model(
+        torch.randint(0, BASE.vocab_size, (2, 8))
+    )  # no targets, like the SFT trainer
+    extra = moe_balance_loss(
+        torch.nn.DataParallel(model)
+    )  # wrappers are looked through
     assert isinstance(extra, torch.Tensor) and model.aux_loss is not None
     assert torch.allclose(extra, BASE.moe_aux_loss_coef * model.aux_loss)
     extra.backward()
     assert model.blocks[0].mlp.router.weight.grad is not None
     assert moe_balance_loss(_model(BASE)) == 0.0  # dense modern model
-    assert moe_balance_loss(Transformer(n_head=2, n_embed=16, context_length=8, vocab_size=32, N_BLOCKS=1)) == 0.0
+    assert (
+        moe_balance_loss(
+            Transformer(
+                n_head=2, n_embed=16, context_length=8, vocab_size=32, N_BLOCKS=1
+            )
+        )
+        == 0.0
+    )
 
 
 def test_tied_embeddings_share_one_matrix() -> None:
@@ -212,7 +240,11 @@ def test_gradient_checkpointing_gives_the_same_gradients(name: str) -> None:
         model.gradient_checkpointing = ckpt
         _, loss = model(idx, idx)
         loss.backward()
-        grads.append(torch.cat([p.grad.flatten() for p in model.parameters() if p.grad is not None]))
+        grads.append(
+            torch.cat(
+                [p.grad.flatten() for p in model.parameters() if p.grad is not None]
+            )
+        )
     assert torch.allclose(grads[0], grads[1], atol=1e-5)
 
 
@@ -227,7 +259,9 @@ def test_cached_and_uncached_generation_agree(name: str) -> None:
 
 def test_generation_can_run_past_the_context_window() -> None:
     model = _model(BASE)
-    out = model.generate(torch.zeros(1, 4, dtype=torch.long), max_new_tokens=3 * BASE.context_length)
+    out = model.generate(
+        torch.zeros(1, 4, dtype=torch.long), max_new_tokens=3 * BASE.context_length
+    )
     assert out.shape == (1, 4 + 3 * BASE.context_length)
 
 
@@ -236,7 +270,10 @@ def test_config_validation() -> None:
         ModernConfig(n_embed=30, n_head=4)
     with pytest.raises(ValueError, match="n_kv_head"):
         ModernConfig(n_embed=32, n_head=4, n_kv_head=3)
-    assert ModernConfig.from_mapping({"n_embed": 64, "n_head": 4, "lr": 1e-3}).n_embed == 64
+    assert (
+        ModernConfig.from_mapping({"n_embed": 64, "n_head": 4, "lr": 1e-3}).n_embed
+        == 64
+    )
 
 
 def test_post_training_wrappers_accept_the_modern_model() -> None:
@@ -252,7 +289,9 @@ def test_post_training_wrappers_accept_the_modern_model() -> None:
     reward = RewardModel(_model(BASE))(idx, seq_lengths=torch.tensor([8, 5]))
     assert reward.shape == (2,)
     rb = generate_with_logprobs(model, idx[:, :4], max_new_tokens=6)
-    lp, mask = compute_logprobs(model, rb.sequences, rb.response_mask, requires_grad=False)
+    lp, mask = compute_logprobs(
+        model, rb.sequences, rb.response_mask, requires_grad=False
+    )
     assert torch.allclose(rb.gen_logprobs[rb.response_mask[:, 4:]], lp[mask], atol=1e-4)
 
 
@@ -265,11 +304,20 @@ def test_rl_rollouts_use_the_kv_cache_and_sample_the_same_tokens() -> None:
     runs = []
     for use_cache in (True, False):
         torch.manual_seed(0)
-        runs.append(generate_with_logprobs(model, prompts, 12, temperature=0.9, use_cache=use_cache))
+        runs.append(
+            generate_with_logprobs(
+                model, prompts, 12, temperature=0.9, use_cache=use_cache
+            )
+        )
     cached, plain = runs
     assert torch.equal(cached.sequences, plain.sequences)
     assert torch.allclose(cached.gen_logprobs, plain.gen_logprobs, atol=1e-5)
     # the PPO actor wraps the policy in a value head; its rollouts take the cached path too
-    actor = TransformerWithValueHead(model)  # built before seeding: its init draws random numbers
+    actor = TransformerWithValueHead(
+        model
+    )  # built before seeding: its init draws random numbers
     torch.manual_seed(0)
-    assert torch.equal(generate_with_logprobs(actor, prompts, 12, temperature=0.9).sequences, cached.sequences)
+    assert torch.equal(
+        generate_with_logprobs(actor, prompts, 12, temperature=0.9).sequences,
+        cached.sequences,
+    )

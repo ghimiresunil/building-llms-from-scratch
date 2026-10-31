@@ -58,7 +58,9 @@ def test_strip_wrapper_prefixes_handles_any_nesting() -> None:
 
 def test_unwrap_model_removes_compile_and_data_parallel(cfg: StageConfig) -> None:
     model = build_model_from_config(cfg)
-    wrapped = torch.compile(nn.DataParallel(model))  # compile wraps lazily, no forward needed
+    wrapped = torch.compile(
+        nn.DataParallel(model)
+    )  # compile wraps lazily, no forward needed
     assert unwrap_model(wrapped) is model
     assert unwrap_model(model) is model
 
@@ -87,7 +89,9 @@ def test_old_prefixed_checkpoints_still_load(cfg: StageConfig, tmp_path: str) ->
     assert _weights_equal(load_model_from_ckpt(path, "cpu"), model)
 
 
-def test_reward_checkpoint_loads_for_chat_and_as_reward_model(cfg: StageConfig, tmp_path: str) -> None:
+def test_reward_checkpoint_loads_for_chat_and_as_reward_model(
+    cfg: StageConfig, tmp_path: str
+) -> None:
     rm = RewardModel(build_model_from_config(cfg))
     with torch.no_grad():
         rm.reward_head.weight.normal_()
@@ -103,29 +107,51 @@ def test_reward_checkpoint_loads_for_chat_and_as_reward_model(cfg: StageConfig, 
 
 def test_legacy_checkpoint_dims_are_read_from_config(tmp_path: str) -> None:
     """Checkpoints from scripts/train_transformer.py store their sizes under ``config``."""
-    model = Transformer(n_head=2, n_embed=16, context_length=8, vocab_size=64, N_BLOCKS=1)
-    config = {"n_head": 2, "n_embed": 16, "context_length": 8, "vocab_size": 64, "n_blocks": 1}
+    model = Transformer(
+        n_head=2, n_embed=16, context_length=8, vocab_size=64, N_BLOCKS=1
+    )
+    config = {
+        "n_head": 2,
+        "n_embed": 16,
+        "context_length": 8,
+        "vocab_size": 64,
+        "n_blocks": 1,
+    }
     path = os.path.join(tmp_path, "legacy.pt")
     torch.save({"model_state_dict": model.state_dict(), "config": config}, path)
     assert _weights_equal(load_model_from_ckpt(path, "cpu"), model)
 
 
-def test_causal_masks_are_not_saved_and_old_checkpoints_with_them_still_load(tmp_path: str) -> None:
+def test_causal_masks_are_not_saved_and_old_checkpoints_with_them_still_load(
+    tmp_path: str,
+) -> None:
     """Every classic head used to save its (context x context) mask: ~1.6 GiB in the 400M config."""
-    model = Transformer(n_head=4, n_embed=32, context_length=64, vocab_size=50, N_BLOCKS=2)
+    model = Transformer(
+        n_head=4, n_embed=32, context_length=64, vocab_size=50, N_BLOCKS=2
+    )
     assert not any(k.endswith(".tril") for k in model.state_dict())
-    masks = {f"attn_blocks.{b}.attn.heads.{h}.tril": torch.tril(torch.ones(64, 64)) for b in range(2) for h in range(4)}
+    masks = {
+        f"attn_blocks.{b}.attn.heads.{h}.tril": torch.tril(torch.ones(64, 64))
+        for b in range(2)
+        for h in range(4)
+    }
     path = os.path.join(tmp_path, "old_format.pt")
     torch.save({"model_state_dict": {**model.state_dict(), **masks}}, path)
 
-    fresh = Transformer(n_head=4, n_embed=32, context_length=64, vocab_size=50, N_BLOCKS=2)
-    fresh.load_state_dict(model_state_from_checkpoint(load_checkpoint(path)))  # strict, like resume does
+    fresh = Transformer(
+        n_head=4, n_embed=32, context_length=64, vocab_size=50, N_BLOCKS=2
+    )
+    fresh.load_state_dict(
+        model_state_from_checkpoint(load_checkpoint(path))
+    )  # strict, like resume does
     assert _weights_equal(fresh, model)
 
 
 def test_missing_parameters_fail_loudly(cfg: StageConfig) -> None:
     model = build_model_from_config(cfg)
-    partial = {k: v for k, v in model.state_dict().items() if not k.startswith("lm_head")}
+    partial = {
+        k: v for k, v in model.state_dict().items() if not k.startswith("lm_head")
+    }
     with pytest.raises(RuntimeError, match="missing"):
         load_model_weights(build_model_from_config(cfg), partial, source="partial.pt")
 
@@ -133,12 +159,18 @@ def test_missing_parameters_fail_loudly(cfg: StageConfig) -> None:
 def test_legacy_trainer_resumes_from_prefixed_checkpoint(tmp_path: str) -> None:
     from scripts.train_transformer import restore_training_checkpoint
 
-    model = Transformer(n_head=2, n_embed=8, context_length=8, vocab_size=32, N_BLOCKS=1)
+    model = Transformer(
+        n_head=2, n_embed=8, context_length=8, vocab_size=32, N_BLOCKS=1
+    )
     prefixed = {f"_orig_mod.{k}": v for k, v in model.state_dict().items()}
     path = os.path.join(tmp_path, "checkpoint_step_00000004.pt")
-    torch.save({"model_state_dict": prefixed, "last_completed_step": 4, "losses": [1.0]}, path)
+    torch.save(
+        {"model_state_dict": prefixed, "last_completed_step": 4, "losses": [1.0]}, path
+    )
 
-    fresh = Transformer(n_head=2, n_embed=8, context_length=8, vocab_size=32, N_BLOCKS=1)
+    fresh = Transformer(
+        n_head=2, n_embed=8, context_length=8, vocab_size=32, N_BLOCKS=1
+    )
     fresh_opt = torch.optim.AdamW(fresh.parameters(), lr=1e-3)
     cfg = {"t_lr": 1e-3, "t_lr_decayed": 1e-4, "t_lr_decay_step": 10}
     next_step, losses = restore_training_checkpoint(path, fresh, fresh_opt, cfg, "cpu")

@@ -1,6 +1,10 @@
 """The modern (2024-2026 style) decoder. See ``model.py`` for what changed and why."""
 
-from src.models.modern.attention import GroupedQueryAttention, MultiHeadLatentAttention, attention_mask
+from src.models.modern.attention import (
+    GroupedQueryAttention,
+    MultiHeadLatentAttention,
+    attention_mask,
+)
 from src.models.modern.block import ModernBlock
 from src.models.modern.config import ModernConfig
 from src.models.modern.kv_cache import KVCache

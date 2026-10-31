@@ -10,7 +10,9 @@ import torch
 from src.inference.sampling import sample_next_token
 from src.models.modern import apply_rope, rope_cache
 
-pytestmark = pytest.mark.skipif(os.environ.get("SHAPE_CHECKS") == "0", reason="shape checks turned off")
+pytestmark = pytest.mark.skipif(
+    os.environ.get("SHAPE_CHECKS") == "0", reason="shape checks turned off"
+)
 
 
 def test_a_shape_mismatch_is_caught_at_the_call() -> None:

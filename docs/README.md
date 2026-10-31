@@ -37,13 +37,17 @@ Two newer sections sit next to the pipeline:
    [Reward Model](04_reward_model.md) ->
    [DPO](05_dpo.md) ->
    [PPO](06_ppo.md) ->
-   [GRPO](07_grpo.md).
+   [GRPO](07_grpo.md), then the extras:
+   [Data curation](data_curation.md),
+   [Distillation](10_distillation.md) and
+   [Test-time compute](11_test_time_compute.md).
 3. **Finally run and inspect**:
    [Evaluation](08_evaluation.md), [Inference / Chat](09_inference.md), and the
    [command cheatsheet](howto/commands.md).
 4. **Then go modern**: [the modern model](modern/README.md), [optimizers](modern/optimizers.md),
    [preference losses](modern/preference.md), [RL for reasoning](modern/rl_reasoning.md),
-   [LoRA](modern/lora.md) and [fast inference](modern/inference.md).
+   [LoRA](modern/lora.md), [fast inference](modern/inference.md),
+   [context extension](modern/context_extension.md) and [paged serving](modern/paged_serving.md).
 
 The pipeline mirrors how modern aligned/reasoning models are actually built:
 
@@ -59,6 +63,9 @@ The pipeline mirrors how modern aligned/reasoning models are actually built:
 | 4 | **DPO / ORPO / KTO** | to prefer better answers *without* an RL loop | [05_dpo.md](05_dpo.md) |
 | 5 | **PPO** | to maximize a reward (RM or verifier) with the classic RLHF loop | [06_ppo.md](06_ppo.md) |
 | 6 | **GRPO / RLVR** | to reason, using verifiable rewards (DeepSeek-R1 style) | [07_grpo.md](07_grpo.md) |
+| 7 | **Distillation** | to imitate a bigger teacher's token distributions | [10_distillation.md](10_distillation.md) |
+| | **Data curation** | which raw text to throw away before pretraining | [data_curation.md](data_curation.md) |
+| | **Test-time compute** | pass@k, majority voting, rejection-sampling fine-tuning | [11_test_time_compute.md](11_test_time_compute.md) |
 | | **Data pipeline** | how every dataset above is downloaded & preprocessed | [01_data_pipeline.md](01_data_pipeline.md) |
 | | **Evaluation** | how I measure GSM8K accuracy across all stages | [08_evaluation.md](08_evaluation.md) |
 | | **Inference / chat** | how to actually talk to any checkpoint | [09_inference.md](09_inference.md) |

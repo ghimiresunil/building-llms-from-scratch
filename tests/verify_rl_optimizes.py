@@ -21,7 +21,13 @@ def dense_reward(seq, prompt_len, target=TARGET):
 
 def tiny_model():
     set_seed(0)
-    return Transformer(n_head=4, n_embed=64, context_length=PROMPT_LEN + GEN + 2, vocab_size=VOCAB, N_BLOCKS=2)
+    return Transformer(
+        n_head=4,
+        n_embed=64,
+        context_length=PROMPT_LEN + GEN + 2,
+        vocab_size=VOCAB,
+        N_BLOCKS=2,
+    )
 
 
 def verify_grpo_optimizes():
@@ -41,13 +47,19 @@ def verify_grpo_optimizes():
         old_lp, _ = compute_logprobs(policy, seqs, rmask, requires_grad=False)
         ref_lp, _ = compute_logprobs(ref, seqs, rmask, requires_grad=False)
         new_lp, _ = compute_logprobs(policy, seqs, rmask, requires_grad=True)
-        loss, _ = grpo_loss(new_lp, old_lp, ref_lp, adv, rmask[:, 1:], clip=0.2, kl_coef=0.0)
-        opt.zero_grad(); loss.backward(); opt.step()
+        loss, _ = grpo_loss(
+            new_lp, old_lp, ref_lp, adv, rmask[:, 1:], clip=0.2, kl_coef=0.0
+        )
+        opt.zero_grad()
+        loss.backward()
+        opt.step()
         history.append(rewards.mean().item())
     start, end = sum(history[:5]) / 5, sum(history[-5:]) / 5
     print(f"  mean reward: start {start:.3f} -> end {end:.3f}")
     assert end > start + 0.2, f"GRPO did not improve reward ({start:.3f} -> {end:.3f})"
-    print(f"  [PASS] GRPO raised P(target token); reward climbed {start:.2f} -> {end:.2f}")
+    print(
+        f"  [PASS] GRPO raised P(target token); reward climbed {start:.2f} -> {end:.2f}"
+    )
 
 
 def verify_ppo_optimizes():
@@ -81,7 +93,9 @@ def verify_ppo_optimizes():
             pl, _ = ppo_policy_loss(new_lp, old_lp, adv, resp, clip=0.2)
             vl = ppo_value_loss(values[:, :-1], old_v, ret, resp, vf_clip=0.2)
             loss = pl + 0.5 * vl
-            opt.zero_grad(); loss.backward(); opt.step()
+            opt.zero_grad()
+            loss.backward()
+            opt.step()
         history.append(task_r.mean().item())
     start, end = sum(history[:5]) / 5, sum(history[-5:]) / 5
     print(f"  mean reward: start {start:.3f} -> end {end:.3f}")

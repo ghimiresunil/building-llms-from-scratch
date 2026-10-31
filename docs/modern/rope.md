@@ -95,6 +95,7 @@ context at 10,000, while 15 of them do at 500,000, and those slow pairs are what
 far-apart positions apart. Methods that stretch a trained model to longer
 contexts (position interpolation, NTK scaling, YaRN) all work by rescaling these
 frequencies, which is easy precisely because positions live in one small function.
+[Context extension](context_extension.md) implements all three and compares them.
 
 DeepSeek's multi-head latent attention uses RoPE on only a small part of each head (the
 "decoupled" key); see [attention](attention.md#multi-head-latent-attention) for why.

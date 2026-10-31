@@ -77,16 +77,20 @@ nav:
       - Scaling, FLOPs & Memory: foundations/scaling.md
   - Theory & Pipeline:
       - Data handling: 01_data_pipeline.md
+      - Data curation: data_curation.md
       - Pretraining: 02_pretraining.md
       - SFT: 03_sft.md
       - Reward Model: 04_reward_model.md
       - DPO / ORPO / KTO: 05_dpo.md
       - PPO: 06_ppo.md
       - GRPO / RLVR: 07_grpo.md
+      - Knowledge Distillation: 10_distillation.md
+      - Test-Time Compute & RFT: 11_test_time_compute.md
   - Modern LLM:
       - Overview: modern/README.md
       - RMSNorm, SwiGLU & Init: modern/blocks.md
       - Rotary Embeddings: modern/rope.md
+      - Context Extension (YaRN): modern/context_extension.md
       - GQA, MLA & the KV Cache: modern/attention.md
       - Mixture of Experts: modern/moe.md
       - AdamW, Muon & Schedules: modern/optimizers.md
@@ -94,6 +98,7 @@ nav:
       - GRPO, Dr. GRPO, DAPO, GSPO: modern/rl_reasoning.md
       - LoRA: modern/lora.md
       - Fast Inference: modern/inference.md
+      - Paged KV Cache & Batching: modern/paged_serving.md
   - How-to:
       - Configure (Dynaconf): howto/configs.md
       - Train (UI & CLI): howto/train.md

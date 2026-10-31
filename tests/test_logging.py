@@ -49,7 +49,9 @@ def test_logging_settings_load_from_toml() -> None:
     cfg = load_logging()
     assert (cfg.app_name, cfg.log_level) == ("building-llms-from-scratch", "INFO")
     assert load_logging(env="test").log_level == "DEBUG"
-    assert load_logging(env="smoke").log_level == "INFO"  # no smoke table: use [default]
+    assert (
+        load_logging(env="smoke").log_level == "INFO"
+    )  # no smoke table: use [default]
 
 
 def test_log_level_from_env_var_any_case(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -65,7 +67,9 @@ def test_bad_log_level_names_the_source(monkeypatch: pytest.MonkeyPatch) -> None
 
 def test_app_logger_is_one_instance_across_threads() -> None:
     seen: list[AppLogger] = []
-    threads = [threading.Thread(target=lambda: seen.append(AppLogger())) for _ in range(8)]
+    threads = [
+        threading.Thread(target=lambda: seen.append(AppLogger())) for _ in range(8)
+    ]
     for t in threads:
         t.start()
     for t in threads:

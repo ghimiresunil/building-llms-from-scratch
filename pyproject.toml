@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "building-llms-from-scratch"
-version = "0.3.0"
+version = "0.4.0"
 description = "Build and train an LLM from scratch in plain PyTorch: pretraining, SFT, reward modeling, PPO, DPO and GRPO, on a GPU or a laptop CPU."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Sunil Ghimire" }]
-keywords = ["llm", "transformer", "pytorch", "rlhf", "dpo", "grpo", "education"]
+keywords = ["llm", "transformer", "pytorch", "rlhf", "dpo", "grpo", "distillation", "yarn", "paged-attention", "education"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -69,6 +69,7 @@ packages = [
     "config",
     "data_loader",
     "src",
+    "src.curation",
     "src.decorators",
     "src.inference",
     "src.models",
@@ -93,7 +94,9 @@ filterwarnings = ["ignore::DeprecationWarning:torch.*"]
 [tool.ruff]
 line-length = 88   # matches the ruff hooks in .pre-commit-config.yaml
 target-version = "py310"
-extend-exclude = ["*.ipynb", "data", "models", "logs"]
+# Root-level folders only: a bare "models" would also skip src/models/. Markdown is left alone so
+# code samples in the docs keep their hand alignment.
+extend-exclude = ["*.ipynb", "*.md", "./data", "./models", "./logs"]
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "W", "B", "UP", "I"]
@@ -127,12 +130,15 @@ module = [
     "src.decorators",
     "src.decorators.logging_service",
     "src.checkpoint",
+    "src.curation.*",
     "src.device",
     "src.inference.*",
     "src.models.factory",
     "src.models.lora",
     "src.models.modern.*",
     "src.optim.*",
+    "src.post_training.distill",
+    "src.post_training.test_time",
     "src.tokenizer.*",
 ]
 disallow_untyped_defs = true
