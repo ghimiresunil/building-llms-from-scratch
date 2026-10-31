@@ -26,6 +26,9 @@ n_kv_head = "none"          # grouped-query attention, e.g. 4; "none" = one KV h
 attention = "gqa"           # "gqa" or "mla" (DeepSeek multi-head latent attention)
 kv_latent_dim = "none"      # MLA latent size; "none" = n_embed // 4
 rope_theta = 10000.0
+rope_scaling = "none"       # context extension: "none" | "linear" | "ntk" | "yarn"
+rope_factor = 1.0           # how many times longer than the training context (>= 1)
+rope_original_context = "none"  # the training context length; "none" = context_length / rope_factor
 qk_norm = true
 attn_gate = false
 sliding_window = "none"     # e.g. 512 to attend to the last 512 tokens only

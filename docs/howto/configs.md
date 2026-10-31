@@ -11,7 +11,7 @@ Python: what you see in the TOML files is what a run uses.
 configs/
   base.toml        # model shape + runtime, shared by every post-training stage
   pretrain.toml    # one file per stage, holding only that stage's settings
-  sft.toml  reward.toml  dpo.toml  ppo.toml  grpo.toml
+  sft.toml  reward.toml  dpo.toml  ppo.toml  grpo.toml  distill.toml
   presets.toml     # the model sizes for scripts/train_transformer.py --preset
   logging.toml     # log level and format, read by src/decorators
 ```
