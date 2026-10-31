@@ -23,7 +23,9 @@ def test_gae_reward_to_go():
 def test_gae_masks_outside_response():
     r = torch.tensor([[0.0, 1.0, 0.0]])
     v = torch.zeros(1, 3)
-    m = torch.tensor([[0, 1, 0]], dtype=torch.bool)  # only middle token is a response token
+    m = torch.tensor(
+        [[0, 1, 0]], dtype=torch.bool
+    )  # only middle token is a response token
     adv, ret = compute_gae(r, v, v, m, gamma=1.0, lam=1.0)
     assert adv[0, 0] == 0 and adv[0, 2] == 0
     print("ok  GAE zeros advantages outside the response")
@@ -41,13 +43,19 @@ def test_whiten():
 def test_ppo_losses():
     m = torch.ones(1, 3, dtype=torch.bool)
     # ratio == 1 -> policy loss = -mean(advantage)
-    loss, clipf = ppo_policy_loss(torch.zeros(1, 3), torch.zeros(1, 3), torch.ones(1, 3), m, clip=0.2)
+    loss, clipf = ppo_policy_loss(
+        torch.zeros(1, 3), torch.zeros(1, 3), torch.ones(1, 3), m, clip=0.2
+    )
     assert abs(loss.item() + 1.0) < 1e-5 and clipf.item() == 0.0
     # value loss = 0.5 * MSE
-    vl = ppo_value_loss(torch.zeros(1, 3), torch.zeros(1, 3), torch.ones(1, 3), m, vf_clip=0.2)
+    vl = ppo_value_loss(
+        torch.zeros(1, 3), torch.zeros(1, 3), torch.ones(1, 3), m, vf_clip=0.2
+    )
     assert abs(vl.item() - 0.5) < 1e-5
     # clipping engages for a large ratio
-    _, cf = ppo_policy_loss(torch.full((1, 3), 1.0), torch.zeros(1, 3), torch.ones(1, 3), m, clip=0.2)
+    _, cf = ppo_policy_loss(
+        torch.full((1, 3), 1.0), torch.zeros(1, 3), torch.ones(1, 3), m, clip=0.2
+    )
     assert cf.item() == 1.0
     print("ok  ppo policy/value loss + clip fraction")
 
@@ -66,10 +74,10 @@ def test_grpo_loss_and_kl():
     z = torch.zeros(B, L)
     m = torch.ones(B, L, dtype=torch.bool)
     loss, st = grpo_loss(z, z, z, torch.ones(B), m, clip=0.2, kl_coef=0.04)
-    assert abs(loss.item() + 1.0) < 1e-5      # ratio=1, adv=1, kl=0 -> -1
+    assert abs(loss.item() + 1.0) < 1e-5  # ratio=1, adv=1, kl=0 -> -1
     assert abs(st["kl"]) < 1e-6
     kl = k3_kl(torch.tensor([-1.0, 0.5, 0.0]), torch.zeros(3))
-    assert (kl >= 0).all()                    # k3 KL is non-negative
+    assert (kl >= 0).all()  # k3 KL is non-negative
     print("ok  grpo_loss + non-negative k3 KL")
 
 

@@ -80,10 +80,14 @@ def test_checkpoint_save_failure_does_not_leave_partial_file():
 
     with tempfile.TemporaryDirectory() as tmp:
         target = checkpoint_path(tmp, 7)
-        with mock.patch("scripts.train_transformer.torch.save", side_effect=RuntimeError("boom")):
+        with mock.patch(
+            "scripts.train_transformer.torch.save", side_effect=RuntimeError("boom")
+        ):
             try:
                 save_training_checkpoint(target, model, optimizer, cfg, [1.0], step=7)
-                raise AssertionError("save_training_checkpoint should re-raise save errors")
+                raise AssertionError(
+                    "save_training_checkpoint should re-raise save errors"
+                )
             except RuntimeError:
                 pass
 

@@ -29,12 +29,20 @@ class KVCache:
         self.v = torch.zeros(*shape, v_dim, device=device, dtype=dtype)
 
     def update(
-        self, layer: int, k_new: Float[Tensor, "batch heads seq k_dim"], v_new: Float[Tensor, "batch heads seq v_dim"]
-    ) -> tuple[Float[Tensor, "batch heads total k_dim"], Float[Tensor, "batch heads total v_dim"]]:
+        self,
+        layer: int,
+        k_new: Float[Tensor, "batch heads seq k_dim"],
+        v_new: Float[Tensor, "batch heads seq v_dim"],
+    ) -> tuple[
+        Float[Tensor, "batch heads total k_dim"],
+        Float[Tensor, "batch heads total v_dim"],
+    ]:
         """Store this step's keys/values for ``layer`` and return everything cached so far."""
         end = self.length + k_new.size(2)
         if end > self.max_len:
-            raise ValueError(f"KV cache is full ({self.max_len} tokens); reset it or use a longer one")
+            raise ValueError(
+                f"KV cache is full ({self.max_len} tokens); reset it or use a longer one"
+            )
         self.k[layer, :, :, self.length : end] = k_new
         self.v[layer, :, :, self.length : end] = v_new
         return self.k[layer, :, :, :end], self.v[layer, :, :, :end]
@@ -49,5 +57,7 @@ class KVCache:
     def bytes_per_token(self) -> int:
         """Memory one token costs across all layers (keys + values)."""
         n_layers, batch, heads = self.k.shape[:3]
-        per_token = heads * (self.k.shape[-1] + self.v.shape[-1]) * self.k.element_size()
+        per_token = (
+            heads * (self.k.shape[-1] + self.v.shape[-1]) * self.k.element_size()
+        )
         return n_layers * per_token

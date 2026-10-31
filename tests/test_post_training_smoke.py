@@ -28,7 +28,9 @@ from src.post_training.value_head import TransformerWithValueHead
 
 def _tiny_model(vocab=64, ctx=32):
     torch.manual_seed(0)
-    return Transformer(n_head=4, n_embed=32, context_length=ctx, vocab_size=vocab, N_BLOCKS=2)
+    return Transformer(
+        n_head=4, n_embed=32, context_length=ctx, vocab_size=vocab, N_BLOCKS=2
+    )
 
 
 def test_forward_hidden_matches_forward():
@@ -37,7 +39,9 @@ def test_forward_hidden_matches_forward():
     with torch.no_grad():
         logits_a, _ = m(idx)
         logits_b = m.lm_head(m.forward_hidden(idx))
-    assert torch.allclose(logits_a, logits_b, atol=1e-5), "forward_hidden must reproduce forward logits"
+    assert torch.allclose(logits_a, logits_b, atol=1e-5), (
+        "forward_hidden must reproduce forward logits"
+    )
     print("ok  forward_hidden matches forward")
 
 
@@ -48,8 +52,14 @@ def test_compute_logprobs_matches_manual():
     lp, shifted = compute_logprobs(m, seq, mask, temperature=1.0, requires_grad=False)
     with torch.no_grad():
         logits = m(seq)[0][:, :-1, :]
-        manual = F.log_softmax(logits.float(), dim=-1).gather(-1, seq[:, 1:, None]).squeeze(-1)
-    assert torch.allclose(lp, manual, atol=1e-5), "compute_logprobs disagrees with manual log_softmax/gather"
+        manual = (
+            F.log_softmax(logits.float(), dim=-1)
+            .gather(-1, seq[:, 1:, None])
+            .squeeze(-1)
+        )
+    assert torch.allclose(lp, manual, atol=1e-5), (
+        "compute_logprobs disagrees with manual log_softmax/gather"
+    )
     assert shifted.shape == (3, 11)
     print("ok  compute_logprobs matches manual computation")
 
@@ -58,15 +68,25 @@ def test_rollout_logprobs_consistent():
     # Recorded sampling log-probs must equal a teacher-forced recompute under the same model+temp.
     m = _tiny_model().eval()
     prompt = torch.randint(0, 64, (4, 5))
-    rb = generate_with_logprobs(m, prompt, max_new_tokens=10, temperature=1.0, top_k=None, top_p=None)
+    rb = generate_with_logprobs(
+        m, prompt, max_new_tokens=10, temperature=1.0, top_k=None, top_p=None
+    )
     assert rb.sequences.shape[1] == 5 + 10
-    assert rb.response_mask[:, :5].sum() == 0, "prompt positions must not be in response_mask"
-    lp, shifted = compute_logprobs(m, rb.sequences, rb.response_mask, temperature=1.0, requires_grad=False)
+    assert rb.response_mask[:, :5].sum() == 0, (
+        "prompt positions must not be in response_mask"
+    )
+    lp, shifted = compute_logprobs(
+        m, rb.sequences, rb.response_mask, temperature=1.0, requires_grad=False
+    )
     # Align recorded gen_logprobs (B,G) to shifted recompute on generated positions.
     recorded = rb.gen_logprobs[rb.response_mask[:, 5:]]
     recomputed = lp[shifted]
-    assert torch.allclose(recorded, recomputed, atol=1e-4), "sampling vs recompute log-probs diverge"
-    print(f"ok  rollout/recompute log-probs consistent ({recorded.numel()} response tokens)")
+    assert torch.allclose(recorded, recomputed, atol=1e-4), (
+        "sampling vs recompute log-probs diverge"
+    )
+    print(
+        f"ok  rollout/recompute log-probs consistent ({recorded.numel()} response tokens)"
+    )
 
 
 def test_context_cap_enforced():
@@ -108,16 +128,22 @@ def test_frozen_copy_and_reductions():
 
 
 def test_chat_template_masking():
-    msgs = [{"role": "user", "content": "What is 2+2?"},
-            {"role": "assistant", "content": "<answer>4</answer>"}]
+    msgs = [
+        {"role": "user", "content": "What is 2+2?"},
+        {"role": "assistant", "content": "<answer>4</answer>"},
+    ]
     ids, mask = ct.encode_chat(msgs)
     assert len(ids) == len(mask)
-    assert ids[-1] == ct.EOT_ID and mask[-1] == 1, "assistant turn must end in a trained EOT"
+    assert ids[-1] == ct.EOT_ID and mask[-1] == 1, (
+        "assistant turn must end in a trained EOT"
+    )
     # The assistant content tokens should be the only masked-in region (plus its EOT).
     assert sum(mask) > 0 and sum(mask) < len(mask)
     prompt_ids = ct.encode_prompt(msgs[:1])
     assert ct.decode(prompt_ids).endswith(ct.ASSISTANT_HEADER)
-    print(f"ok  chat template ids/mask aligned ({sum(mask)}/{len(mask)} trained tokens)")
+    print(
+        f"ok  chat template ids/mask aligned ({sum(mask)}/{len(mask)} trained tokens)"
+    )
 
 
 def test_reward_parsing():
@@ -125,9 +151,9 @@ def test_reward_parsing():
     assert extract_answer("blah <answer>42</answer> done") == 42.0
     assert extract_answer("the total is 1,234 dollars") == 1234.0
     assert is_correct("<answer>42</answer>", 42.0)
-    assert reward_gsm8k("<answer>42</answer>", 42.0) > 1.0           # correct + format
-    assert reward_gsm8k("<answer>7</answer>", 42.0) == 0.2           # wrong but formatted
-    assert reward_gsm8k("the answer is 42", 42.0) == 1.0            # correct, no format bonus
+    assert reward_gsm8k("<answer>42</answer>", 42.0) > 1.0  # correct + format
+    assert reward_gsm8k("<answer>7</answer>", 42.0) == 0.2  # wrong but formatted
+    assert reward_gsm8k("the answer is 42", 42.0) == 1.0  # correct, no format bonus
     print("ok  reward parsing + verifier scoring")
 
 
@@ -154,8 +180,12 @@ def test_preference_truncation_preserves_responses():
     assert batch["chosen_ids"][0].tolist() != batch["rejected_ids"][0].tolist(), (
         "truncation must retain enough response tokens to distinguish the pair"
     )
-    chosen_full_mask = ct.encode_chat([{"role": "assistant", "content": row["chosen"]}])[1]
-    rejected_full_mask = ct.encode_chat([{"role": "assistant", "content": row["rejected"]}])[1]
+    chosen_full_mask = ct.encode_chat(
+        [{"role": "assistant", "content": row["chosen"]}]
+    )[1]
+    rejected_full_mask = ct.encode_chat(
+        [{"role": "assistant", "content": row["rejected"]}]
+    )[1]
     assert chosen_mask.sum().item() == sum(chosen_full_mask)
     assert rejected_mask.sum().item() == sum(rejected_full_mask)
     assert batch["chosen_ids"][0, chosen_mask][-1].item() == ct.EOT_ID
@@ -165,6 +195,7 @@ def test_preference_truncation_preserves_responses():
 
 def test_build_from_config():
     from config.settings import load_stage
+
     cfg = load_stage("sft", env="test")
     m = build_model_from_config(cfg)
     assert m.context_length == 64 and m.lm_head.out_features == 256

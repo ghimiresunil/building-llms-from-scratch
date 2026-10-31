@@ -16,7 +16,9 @@ def test_auto_returns_a_usable_device() -> None:
     torch.zeros(2, device=device)  # actually usable
 
 
-def test_missing_backend_falls_back_to_cpu_with_a_warning(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_missing_backend_falls_back_to_cpu_with_a_warning(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
     with pytest.warns(UserWarning, match="CUDA"):
         assert resolve_device("cuda") == "cpu"

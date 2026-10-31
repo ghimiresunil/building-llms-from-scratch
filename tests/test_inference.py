@@ -17,7 +17,9 @@ from src.models.transformer import Transformer
 
 def _classic(seed: int, vocab: int = 13) -> Transformer:
     torch.manual_seed(seed)
-    return Transformer(n_head=2, n_embed=16, context_length=32, vocab_size=vocab, N_BLOCKS=1).eval()
+    return Transformer(
+        n_head=2, n_embed=16, context_length=32, vocab_size=vocab, N_BLOCKS=1
+    ).eval()
 
 
 def _greedy(model: nn.Module, idx: torch.Tensor, n: int) -> torch.Tensor:
@@ -39,7 +41,9 @@ def test_speculative_decoding_respects_the_trained_window() -> None:
     """Each model only sees its last `window` tokens; inside the window the result is exact."""
     target, draft = _classic(0), _classic(1)
     prompt = torch.tensor([[1, 2, 3]])
-    ours, _ = speculative_generate(target, draft, prompt, 10, k=3, greedy=True, target_window=16, draft_window=5)
+    ours, _ = speculative_generate(
+        target, draft, prompt, 10, k=3, greedy=True, target_window=16, draft_window=5
+    )
     assert torch.equal(ours, target.generate(prompt, 10, top_k=1, context_window=16))
 
     seen: dict[str, int] = {}
@@ -47,11 +51,14 @@ def test_speculative_decoding_respects_the_trained_window() -> None:
     def record(name: str):
         def hook(module: nn.Module, args: tuple[torch.Tensor, ...]) -> None:
             seen[name] = max(seen.get(name, 0), args[0].size(1))
+
         return hook
 
     target.register_forward_pre_hook(record("target"))
     draft.register_forward_pre_hook(record("draft"))
-    speculative_generate(target, draft, prompt, 40, k=3, greedy=True, target_window=16, draft_window=5)
+    speculative_generate(
+        target, draft, prompt, 40, k=3, greedy=True, target_window=16, draft_window=5
+    )
     assert seen == {"target": 16, "draft": 5}
     with pytest.raises(ValueError, match="longer than k"):
         speculative_generate(target, draft, prompt, 4, k=8, target_window=8)
@@ -60,9 +67,13 @@ def test_speculative_decoding_respects_the_trained_window() -> None:
 def test_a_perfect_draft_is_always_accepted() -> None:
     target = _classic(0)
     g = torch.Generator().manual_seed(0)
-    _, stats = speculative_generate(target, copy.deepcopy(target), torch.tensor([[1, 2]]), 24, k=4, generator=g)
+    _, stats = speculative_generate(
+        target, copy.deepcopy(target), torch.tensor([[1, 2]]), 24, k=4, generator=g
+    )
     assert stats.acceptance_rate > 0.95
-    assert stats.tokens_per_target_call > 4  # k accepted guesses + 1 bonus token per target pass
+    assert (
+        stats.tokens_per_target_call > 4
+    )  # k accepted guesses + 1 bonus token per target pass
 
 
 def test_sampling_keeps_the_target_distribution_whatever_the_draft() -> None:
@@ -97,9 +108,15 @@ def test_int8_linear_is_accurate_and_four_times_smaller() -> None:
 def test_quantized_models_give_nearly_the_same_logits(arch: str) -> None:
     torch.manual_seed(0)
     if arch == "classic":
-        model: nn.Module = Transformer(n_head=4, n_embed=64, context_length=32, vocab_size=100, N_BLOCKS=2).eval()
+        model: nn.Module = Transformer(
+            n_head=4, n_embed=64, context_length=32, vocab_size=100, N_BLOCKS=2
+        ).eval()
     else:
-        model = ModernTransformer(ModernConfig(vocab_size=100, context_length=32, n_embed=64, n_head=4, n_blocks=2)).eval()
+        model = ModernTransformer(
+            ModernConfig(
+                vocab_size=100, context_length=32, n_embed=64, n_head=4, n_blocks=2
+            )
+        ).eval()
     idx = torch.randint(0, 100, (2, 16))
     with torch.no_grad():
         before = model(idx)[0]

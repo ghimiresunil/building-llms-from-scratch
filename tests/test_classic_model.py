@@ -9,7 +9,9 @@ from src.models.transformer import Transformer
 
 def _model(n_blocks: int = 3) -> Transformer:
     torch.manual_seed(0)
-    return Transformer(n_head=4, n_embed=32, context_length=16, vocab_size=50, N_BLOCKS=n_blocks).eval()
+    return Transformer(
+        n_head=4, n_embed=32, context_length=16, vocab_size=50, N_BLOCKS=n_blocks
+    ).eval()
 
 
 def test_forward_shapes_loss_and_causality() -> None:

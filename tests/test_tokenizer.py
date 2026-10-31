@@ -10,7 +10,8 @@ from src.tokenizer import BPETokenizer, safe_decode, tokenizer_from_spec, tokeni
 
 CORPUS = (
     "the cat sat on the mat. the cat ate the rat. a dog saw the cat and the rat. " * 40
-    + "Once upon a time, there was a little girl named Lily. She liked to play outside. " * 40
+    + "Once upon a time, there was a little girl named Lily. She liked to play outside. "
+    * 40
 )
 
 
@@ -21,7 +22,13 @@ def tok() -> BPETokenizer:
 
 @pytest.mark.parametrize(
     "text",
-    ["the cat sat", "Hello, World!  Spaces   and\nnew lines\n", "naïve café, 日本語, emoji 🙂", "", "zxq 123456789"],
+    [
+        "the cat sat",
+        "Hello, World!  Spaces   and\nnew lines\n",
+        "naïve café, 日本語, emoji 🙂",
+        "",
+        "zxq 123456789",
+    ],
 )
 def test_round_trip_is_lossless(tok: BPETokenizer, text: str) -> None:
     assert tok.decode(tok.encode_ordinary(text)) == text
@@ -36,7 +43,9 @@ def test_training_learns_frequent_pieces_first(tok: BPETokenizer) -> None:
         b = chunk.encode("utf-8")
         pairs.update(zip(b, b[1:]))
     assert tok.merges[0] == pairs.most_common(1)[0][0]
-    assert len(tok.encode_ordinary(CORPUS)) < len(CORPUS.encode("utf-8")) / 3  # real compression
+    assert (
+        len(tok.encode_ordinary(CORPUS)) < len(CORPUS.encode("utf-8")) / 3
+    )  # real compression
     assert tok.n_vocab <= 400
 
 
@@ -60,7 +69,9 @@ def _textbook_bpe(text: str, n_merges: int, pattern: str) -> list[tuple[int, int
             counts.update(zip(ids, ids[1:]))
         if not counts:
             break
-        best = min(counts, key=lambda p: (-counts[p], p))  # most frequent; ties go to the smaller pair
+        best = min(
+            counts, key=lambda p: (-counts[p], p)
+        )  # most frequent; ties go to the smaller pair
         merges.append(best)
         chunks = [_merge(ids, best, 256 + k) for ids in chunks]
     return merges
@@ -88,7 +99,9 @@ def test_specs_round_trip_and_safe_decode(tok: BPETokenizer, tmp_path) -> None:
     r50k = tokenizer_from_spec(None)  # the repo default
     assert tokenizer_spec(r50k) == {"type": "tiktoken", "name": "r50k_base"}
     ids = r50k.encode_ordinary("The cat")
-    assert safe_decode(r50k, ids + [50300]) == "The cat"  # padding ids are skipped, not a crash
+    assert (
+        safe_decode(r50k, ids + [50300]) == "The cat"
+    )  # padding ids are skipped, not a crash
 
 
 def test_vocab_must_hold_the_bytes() -> None:
