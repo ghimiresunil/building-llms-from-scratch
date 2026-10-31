@@ -215,3 +215,7 @@ classic model gains less because its untied output layer and position table stay
 int8 weight-only is the simplest member of a big family. Going further means 4-bit weights
 with groups of 32 to 128 values sharing a scale (GPTQ, AWQ), or quantizing activations too so
 the matrix multiply itself runs in int8 or fp8.
+
+Everything on this page makes *one* sequence fast. Serving many at once is a different
+problem, about memory and scheduling: see [the paged KV cache and continuous
+batching](paged_serving.md).
