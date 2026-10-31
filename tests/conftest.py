@@ -9,6 +9,7 @@ CHECKED_MODULES = [
     "src.models.lora",
     "src.models.modern",
     "src.optim",
+    "src.post_training.distill",
     "src.post_training.dpo",
     "src.post_training.grpo",
 ]
@@ -18,7 +19,9 @@ if os.environ.get("SHAPE_CHECKS", "1") != "0":
         from jaxtyping import install_import_hook
 
         import tests._typecheck  # noqa: F401  (jaxtyping looks the checker up as tests -> _typecheck)
-    except ImportError:  # beartype is a dev dependency; plain runs still work without it
+    except (
+        ImportError
+    ):  # beartype is a dev dependency; plain runs still work without it
         pass
     else:
         # Installed for the whole session (no `with`), before any test imports these modules.
